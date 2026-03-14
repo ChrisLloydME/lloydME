@@ -8,10 +8,25 @@ interface Props {
   title?: string;
   description?: string;
   lang?: string;
+  bodyClass?: string;
+  mainClass?: string;
+  contentClass?: string;
+  themeColor?: string;
+  fullBleed?: boolean;
 }
 
-const { title, description = SITE_DESCRIPTION, lang = "en" } = Astro.props as Props;
+const {
+  title,
+  description = SITE_DESCRIPTION,
+  lang = "en",
+  bodyClass,
+  mainClass,
+  contentClass,
+  themeColor = "#f5f5f7",
+  fullBleed = false,
+} = Astro.props as Props;
 const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+const pageDescription = description && description.trim().length > 0 ? description : SITE_DESCRIPTION;
 ---
 
 <!doctype html>
@@ -19,18 +34,18 @@ const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
   <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <meta content={description} name="description" />
+    <meta content={pageDescription} name="description" />
     <meta content={SITE_TITLE} name="apple-mobile-web-app-title" />
-    <meta content="#f5f5f7" name="theme-color" />
+    <meta content={themeColor} name="theme-color" />
     <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
     <title>{pageTitle}</title>
     <slot name="head" />
   </head>
-  <body>
+  <body class:list={[bodyClass]}>
     <div class="relative min-h-screen">
       <Navbar />
-      <main class="px-4 pb-20 sm:px-6">
-        <div class="mx-auto max-w-[1120px]">
+      <main class:list={[fullBleed ? "pb-20" : "px-4 pb-20 sm:px-6", mainClass]}>
+        <div class:list={[!fullBleed && "mx-auto max-w-[1120px]", contentClass]}>
           <slot />
         </div>
       </main>

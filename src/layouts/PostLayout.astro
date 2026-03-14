@@ -1,54 +1,130 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import BaseLayout from "./BaseLayout.astro";
-import { formatDate, tagToSlug } from "../utils/blog";
+import { formatDate, getPostSlug, tagToSlug } from "../utils/blog";
 
 interface Props {
   post: CollectionEntry<"blog">;
 }
 
 const { post } = Astro.props as Props;
+const postSlug = getPostSlug(post);
+const isBlueImmersive = post.data.pageTheme === "blue-immersive";
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description} lang="zh-CN">
-  <article class="mx-auto max-w-3xl">
-    <header class="reveal px-6 py-12 text-center sm:px-10 sm:py-14">
-      <p class="section-kicker">Article</p>
-      <h1 class="mt-4 text-4xl font-semibold leading-tight tracking-[-0.05em] text-[var(--ink)] sm:text-5xl">
-        {post.data.title}
-      </h1>
-      <p class="section-copy mx-auto mt-5">{post.data.description}</p>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  lang="zh-CN"
+  bodyClass={isBlueImmersive ? "theme-blue-immersive" : undefined}
+  mainClass={isBlueImmersive ? "pb-24 sm:pb-28" : undefined}
+  contentClass={isBlueImmersive ? "max-w-none" : undefined}
+  themeColor={isBlueImmersive ? "#4c719d" : undefined}
+  fullBleed={isBlueImmersive}
+>
+  <article
+    class:list={
+      isBlueImmersive
+        ? "article-page article-page-blue mx-auto max-w-none px-0 pb-0"
+        : "mx-auto max-w-4xl px-4 pb-6 sm:px-6"
+    }
+    data-post-slug={postSlug}
+  >
+    <header
+      class:list={
+        isBlueImmersive
+          ? "reveal article-hero article-hero-blue px-0 pt-0 pb-10 text-center sm:pb-12"
+          : "reveal article-hero px-6 py-12 text-center sm:px-10 sm:py-16"
+      }
+    >
+      {
+        post.data.heroImage && (
+          <div class:list={["article-cover-wrap", isBlueImmersive && "article-cover-wrap-blue"]}>
+            <img
+              src={post.data.heroImage}
+              alt={post.data.heroImageAlt ?? post.data.title}
+              class:list={["article-cover", isBlueImmersive && "article-cover-blue"]}
+            />
 
-      <div class="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-[var(--muted)]">
-        <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+            {
+              isBlueImmersive && (
+                <div class="article-hero-copy article-hero-copy-blue">
+                  <p class="section-kicker">Essay</p>
+                  <h1 class="article-title mt-4">{post.data.title}</h1>
 
-        {
-          post.data.updatedDate && (
-            <span class="flex items-center gap-3">
-              <span class="h-1 w-1 rounded-full bg-[var(--accent)]"></span>
-              <span>Updated on {formatDate(post.data.updatedDate)}</span>
-            </span>
-          )
-        }
-      </div>
+                  {post.data.description && <p class="section-copy mx-auto mt-5">{post.data.description}</p>}
+
+                  <div class="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm text-[var(--muted)]">
+                    <span class="article-meta-chip">
+                      <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+                    </span>
+
+                    {
+                      post.data.updatedDate && (
+                        <span class="article-meta-chip">Updated on {formatDate(post.data.updatedDate)}</span>
+                      )
+                    }
+                  </div>
+
+                  {
+                    post.data.tags.length > 0 && (
+                      <div class="mt-6 flex flex-wrap justify-center gap-2">
+                        {post.data.tags.map((tag) => (
+                          <a class="article-tag" href={`/tags/${tagToSlug(tag)}/`}>
+                            #{tag}
+                          </a>
+                        ))}
+                      </div>
+                    )
+                  }
+                </div>
+              )
+            }
+
+            {
+              isBlueImmersive && <></>
+            }
+          </div>
+        )
+      }
 
       {
-        post.data.tags.length > 0 && (
-          <div class="mt-6 flex flex-wrap justify-center gap-2">
-            {post.data.tags.map((tag) => (
-              <a
-                class="rounded-full bg-[var(--surface-strong)] px-3 py-1 text-sm text-[var(--muted)] transition hover:text-[var(--accent)]"
-                href={`/tags/${tagToSlug(tag)}/`}
-              >
-                #{tag}
-              </a>
-            ))}
+        !isBlueImmersive && (
+          <div class="article-hero-copy">
+            <p class="section-kicker">Essay</p>
+            <h1 class="article-title mt-4">{post.data.title}</h1>
+
+            {post.data.description && <p class="section-copy mx-auto mt-5">{post.data.description}</p>}
+
+            <div class="mt-8 flex flex-wrap items-center justify-center gap-3 text-sm text-[var(--muted)]">
+              <span class="article-meta-chip">
+                <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+              </span>
+
+              {
+                post.data.updatedDate && (
+                  <span class="article-meta-chip">Updated on {formatDate(post.data.updatedDate)}</span>
+                )
+              }
+            </div>
+
+            {
+              post.data.tags.length > 0 && (
+                <div class="mt-6 flex flex-wrap justify-center gap-2">
+                  {post.data.tags.map((tag) => (
+                    <a class="article-tag" href={`/tags/${tagToSlug(tag)}/`}>
+                      #{tag}
+                    </a>
+                  ))}
+                </div>
+              )
+            }
           </div>
         )
       }
     </header>
 
-    <div class="section-rail px-0 py-10 sm:py-12">
+    <div class:list={["article-shell", isBlueImmersive && "article-shell-blue"]}>
       <div class="article-flow">
         <slot />
       </div>

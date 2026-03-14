@@ -24,7 +24,7 @@ const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 2);
       { href: "/about/", label: "About the author", tone: "secondary" },
     ]}
     metrics={[
-      { value: `${posts.length}`, label: "Published sample posts" },
+      { value: `${posts.length}`, label: "Published posts" },
       { value: `${featuredPosts.length || latestPosts.length}`, label: "Featured items on the homepage" },
       { value: "100%", label: "Static output, no database required" },
     ]}
