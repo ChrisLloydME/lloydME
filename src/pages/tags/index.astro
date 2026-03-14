@@ -9,13 +9,13 @@ const posts = sortBlogPosts(
 const tags = getAllTags(posts);
 ---
 
-<BaseLayout title="标签">
+<BaseLayout title="Tags">
   <section class="reveal mx-auto max-w-5xl space-y-6">
     <div class="px-7 py-14 text-center sm:px-10 sm:py-16">
       <p class="section-kicker">Tags</p>
-      <h1 class="section-heading-sm mt-3">标签归档</h1>
+      <h1 class="section-heading-sm mt-3">Tag archive</h1>
       <p class="section-copy mx-auto mt-6">
-        标签页帮助访客跨文章浏览同一主题，也方便后续扩展成归档页、专题页或内容索引。
+        Tags let visitors browse a shared topic across posts and can later expand into archives, thematic hubs, or a broader content index.
       </p>
     </div>
 
@@ -26,7 +26,7 @@ const tags = getAllTags(posts);
           href={`/tags/${tag.slug}/`}
         >
           <p class="text-3xl font-semibold tracking-[-0.04em] text-[var(--ink)]">#{tag.label}</p>
-          <p class="mt-3 text-sm text-[var(--muted)]">{tag.count} 篇文章</p>
+          <p class="mt-3 text-sm text-[var(--muted)]">{tag.count} posts</p>
         </a>
       ))}
     </div>

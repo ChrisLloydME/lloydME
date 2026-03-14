@@ -10,10 +10,10 @@ interface Props {
 const { post } = Astro.props as Props;
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description}>
+<BaseLayout title={post.data.title} description={post.data.description} lang="zh-CN">
   <article class="mx-auto max-w-3xl">
     <header class="reveal px-6 py-12 text-center sm:px-10 sm:py-14">
-      <p class="section-kicker">Blog Post</p>
+      <p class="section-kicker">Article</p>
       <h1 class="mt-4 text-4xl font-semibold leading-tight tracking-[-0.05em] text-[var(--ink)] sm:text-5xl">
         {post.data.title}
       </h1>
@@ -26,7 +26,7 @@ const { post } = Astro.props as Props;
           post.data.updatedDate && (
             <span class="flex items-center gap-3">
               <span class="h-1 w-1 rounded-full bg-[var(--accent)]"></span>
-              <span>最近更新于 {formatDate(post.data.updatedDate)}</span>
+              <span>Updated on {formatDate(post.data.updatedDate)}</span>
             </span>
           )
         }
