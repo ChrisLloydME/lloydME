@@ -1,20 +1,20 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: "Avenir Next", "Segoe UI", sans-serif;
-  --font-serif: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-sans: "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Avenir Next", sans-serif;
+  --font-serif: "New York", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
 }
 
 :root {
-  --bg: #f9f5ef;
-  --bg-strong: #eadfcd;
-  --surface: rgba(255, 251, 245, 0.86);
-  --surface-strong: rgba(255, 248, 238, 0.96);
-  --ink: #10213a;
-  --muted: #52627b;
-  --accent: #c46f47;
-  --accent-soft: rgba(196, 111, 71, 0.12);
-  --line: rgba(16, 33, 58, 0.1);
+  --bg: #f5f5f7;
+  --bg-strong: #fbfbfd;
+  --surface: #ffffff;
+  --surface-strong: #fbfbfd;
+  --ink: #1d1d1f;
+  --muted: #6e6e73;
+  --accent: #06c;
+  --accent-soft: rgba(0, 102, 204, 0.08);
+  --line: rgba(29, 29, 31, 0.08);
 }
 
 html {
@@ -26,27 +26,12 @@ body {
   min-height: 100vh;
   color: var(--ink);
   font-family: var(--font-sans);
-  background:
-    radial-gradient(circle at top left, rgba(246, 189, 96, 0.18), transparent 30%),
-    radial-gradient(circle at right 10% top 12%, rgba(57, 85, 128, 0.08), transparent 22%),
-    linear-gradient(180deg, #fffaf4 0%, #f7f1e8 46%, #f9f5ef 100%);
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(rgba(16, 33, 58, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 33, 58, 0.03) 1px, transparent 1px);
-  background-size: 28px 28px;
-  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.36), transparent 90%);
+  background: linear-gradient(180deg, #ffffff 0%, #fcfcfd 20%, #f7f7f8 100%);
 }
 
 ::selection {
   color: #fff;
-  background: rgba(196, 111, 71, 0.9);
+  background: rgba(0, 102, 204, 0.9);
 }
 
 a {
@@ -54,36 +39,73 @@ a {
 }
 
 .card-surface {
-  position: relative;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  backdrop-filter: blur(10px);
-  box-shadow:
-    0 12px 24px rgba(17, 30, 48, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border-top: 1px solid var(--line);
+  background: transparent;
 }
 
 .card-surface::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.35),
-    transparent 22%,
-    transparent 78%,
-    rgba(196, 111, 71, 0.08)
-  );
-  pointer-events: none;
+  content: none;
+}
+
+.section-kicker {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--accent);
+}
+
+.section-heading {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.05em;
+  color: var(--ink);
+}
+
+.section-heading-sm {
+  font-size: clamp(2.1rem, 5vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+}
+
+.section-copy {
+  max-width: 42rem;
+  font-size: clamp(1.05rem, 0.9vw + 0.88rem, 1.28rem);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.link-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition:
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.link-action:hover {
+  color: #0077ed;
+  transform: translateX(2px);
+}
+
+.section-rail {
+  border-top: 1px solid var(--line);
+  padding-top: 3rem;
 }
 
 .article-flow {
   display: grid;
-  gap: 1.35rem;
+  gap: 1.45rem;
   font-family: var(--font-serif);
-  font-size: clamp(1.04rem, 1vw + 0.8rem, 1.15rem);
-  line-height: 1.95;
+  font-size: clamp(1.08rem, 0.9vw + 0.86rem, 1.18rem);
+  line-height: 1.9;
 }
 
 .article-flow h2,
@@ -129,7 +151,7 @@ a {
 }
 
 .article-flow blockquote {
-  border-left: 3px solid rgba(196, 111, 71, 0.6);
+  border-left: 3px solid rgba(0, 102, 204, 0.45);
   padding-left: 1rem;
   color: var(--muted);
   font-style: italic;
@@ -137,7 +159,7 @@ a {
 
 .article-flow code {
   border-radius: 0.35rem;
-  background: rgba(16, 33, 58, 0.06);
+  background: rgba(29, 29, 31, 0.06);
   padding: 0.15rem 0.4rem;
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 0.92em;

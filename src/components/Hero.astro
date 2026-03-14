@@ -28,27 +28,26 @@ const {
 ---
 
 <section class="reveal">
-  <div class="card-surface rounded-2xl px-7 py-10 sm:px-10 sm:py-12">
-    <p class="text-sm uppercase tracking-[0.32em] text-[var(--accent)]">{eyebrow}</p>
-    <h1 class="mt-5 max-w-3xl font-serif text-5xl leading-[1.05] text-[var(--ink)] sm:text-6xl">
+  <div class="px-7 py-14 text-center sm:px-12 sm:py-20">
+    <p class="section-kicker">{eyebrow}</p>
+    <h1 class="section-heading mx-auto mt-4 max-w-5xl">
       {title}
     </h1>
-    <p class="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)]">{summary}</p>
+    <p class="section-copy mx-auto mt-6">{summary}</p>
 
     {
       actions.length > 0 && (
-        <div class="mt-8 flex flex-wrap gap-3">
+        <div class="mt-8 flex flex-wrap justify-center gap-x-6 gap-y-3">
           {actions.map((action) => (
             <a
               class:list={[
-                "rounded-lg px-5 py-3 text-sm transition",
-                action.tone === "secondary"
-                  ? "border border-[var(--line)] bg-white/70 text-[var(--ink)] hover:bg-[var(--accent-soft)]"
-                  : "bg-[var(--ink)] text-white hover:bg-[var(--accent)]",
+                "link-action",
+                action.tone === "secondary" && "text-[#2997ff]",
               ]}
               href={action.href}
             >
               {action.label}
+              <span aria-hidden="true">&gt;</span>
             </a>
           ))}
         </div>
@@ -57,10 +56,14 @@ const {
 
     {
       metrics.length > 0 && (
-        <div class="mt-10 grid gap-4 border-t border-[var(--line)] pt-8 sm:grid-cols-3">
+        <div
+          class="mt-12 border-t border-[var(--line)] pt-8 text-center sm:grid sm:grid-cols-3 sm:divide-x sm:divide-[var(--line)]"
+        >
           {metrics.map((metric) => (
-            <div class="rounded-xl border border-[var(--line)] bg-white/70 p-5">
-              <p class="font-serif text-3xl text-[var(--ink)]">{metric.value}</p>
+            <div class="px-6 py-6">
+              <p class="text-4xl font-semibold tracking-[-0.04em] text-[var(--ink)]">
+                {metric.value}
+              </p>
               <p class="mt-2 text-sm text-[var(--muted)]">{metric.label}</p>
             </div>
           ))}

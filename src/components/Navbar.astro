@@ -7,14 +7,14 @@ const normalizePath = (path: string) =>
 const pathname = normalizePath(Astro.url.pathname);
 ---
 
-<header class="sticky top-0 z-40 px-4 py-4 sm:px-6">
-  <div class="mx-auto max-w-6xl">
-    <nav class="card-surface flex flex-col gap-4 rounded-2xl px-5 py-4 md:flex-row md:items-center md:justify-between">
-      <a class="font-serif text-2xl font-semibold tracking-[0.04em] text-[var(--ink)]" href="/">
+<header class="sticky top-0 z-40 border-b border-[var(--line)] bg-white/88 backdrop-blur-xl">
+  <div class="mx-auto max-w-[1120px] px-4 py-4 sm:px-6">
+    <nav class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <a class="text-lg font-semibold tracking-[-0.03em] text-[var(--ink)] sm:text-xl" href="/">
         {SITE_TITLE}
       </a>
 
-      <div class="flex flex-wrap items-center gap-2">
+      <div class="flex flex-wrap items-center gap-1.5">
         {
           NAVIGATION.map((item) => {
             const itemPath = normalizePath(item.href);
@@ -25,10 +25,10 @@ const pathname = normalizePath(Astro.url.pathname);
             return (
               <a
                 class:list={[
-                  "rounded-lg px-4 py-2 text-sm transition",
+                  "border-b border-transparent px-1 py-1.5 text-[13px] font-medium transition sm:px-2 sm:text-sm",
                   isActive
-                    ? "bg-[var(--ink)] text-white"
-                    : "text-[var(--muted)] hover:bg-[var(--accent-soft)] hover:text-[var(--ink)]",
+                    ? "border-[var(--ink)] text-[var(--ink)]"
+                    : "text-[var(--muted)] hover:border-[var(--line)] hover:text-[var(--ink)]",
                 ]}
                 href={item.href}
                 aria-current={isActive ? "page" : undefined}

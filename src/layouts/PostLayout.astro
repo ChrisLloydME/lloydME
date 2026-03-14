@@ -12,14 +12,14 @@ const { post } = Astro.props as Props;
 
 <BaseLayout title={post.data.title} description={post.data.description}>
   <article class="mx-auto max-w-3xl">
-    <header class="reveal card-surface mb-10 rounded-2xl px-6 py-10 sm:px-10 sm:py-12">
-      <p class="text-sm uppercase tracking-[0.3em] text-[var(--accent)]">Blog Post</p>
-      <h1 class="mt-5 font-serif text-4xl leading-tight text-[var(--ink)] sm:text-5xl">
+    <header class="reveal px-6 py-12 text-center sm:px-10 sm:py-14">
+      <p class="section-kicker">Blog Post</p>
+      <h1 class="mt-4 text-4xl font-semibold leading-tight tracking-[-0.05em] text-[var(--ink)] sm:text-5xl">
         {post.data.title}
       </h1>
-      <p class="mt-5 text-lg leading-8 text-[var(--muted)]">{post.data.description}</p>
+      <p class="section-copy mx-auto mt-5">{post.data.description}</p>
 
-      <div class="mt-6 flex flex-wrap items-center gap-3 text-sm text-[var(--muted)]">
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-[var(--muted)]">
         <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
 
         {
@@ -34,10 +34,10 @@ const { post } = Astro.props as Props;
 
       {
         post.data.tags.length > 0 && (
-          <div class="mt-6 flex flex-wrap gap-2">
+          <div class="mt-6 flex flex-wrap justify-center gap-2">
             {post.data.tags.map((tag) => (
               <a
-                class="rounded-md border border-[var(--line)] bg-white/70 px-3 py-1 text-sm text-[var(--muted)] transition hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                class="rounded-full bg-[var(--surface-strong)] px-3 py-1 text-sm text-[var(--muted)] transition hover:text-[var(--accent)]"
                 href={`/tags/${tagToSlug(tag)}/`}
               >
                 #{tag}
@@ -48,7 +48,7 @@ const { post } = Astro.props as Props;
       }
     </header>
 
-    <div class="card-surface rounded-2xl px-6 py-10 sm:px-10 sm:py-12">
+    <div class="section-rail px-0 py-10 sm:py-12">
       <div class="article-flow">
         <slot />
       </div>

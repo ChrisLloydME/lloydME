@@ -20,7 +20,7 @@ const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <meta content={description} name="description" />
     <meta content={SITE_TITLE} name="apple-mobile-web-app-title" />
-    <meta content="#14213d" name="theme-color" />
+    <meta content="#f5f5f7" name="theme-color" />
     <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
     <title>{pageTitle}</title>
     <slot name="head" />
@@ -28,8 +28,8 @@ const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
   <body>
     <div class="relative min-h-screen">
       <Navbar />
-      <main class="px-4 pb-16 sm:px-6">
-        <div class="mx-auto max-w-6xl">
+      <main class="px-4 pb-20 sm:px-6">
+        <div class="mx-auto max-w-[1120px]">
           <slot />
         </div>
       </main>

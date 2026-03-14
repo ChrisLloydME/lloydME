@@ -21,23 +21,25 @@ const projects = [
 ---
 
 <BaseLayout title="项目">
-  <section class="reveal space-y-6">
-    <div class="card-surface rounded-2xl px-7 py-10 sm:px-10 sm:py-12">
-      <p class="text-sm uppercase tracking-[0.3em] text-[var(--accent)]">Projects</p>
-      <h1 class="mt-4 font-serif text-5xl text-[var(--ink)]">项目与实验</h1>
-      <p class="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)]">
+  <section class="reveal mx-auto max-w-5xl space-y-6">
+    <div class="px-7 py-14 text-center sm:px-10 sm:py-16">
+      <p class="section-kicker">Projects</p>
+      <h1 class="section-heading-sm mt-3">项目与实验</h1>
+      <p class="section-copy mx-auto mt-6">
         这是一个示例 Projects 页面。你可以把代表性的产品、开源项目、研究主题或长期实验放在这里，帮助访客快速理解你的实践方向。
       </p>
     </div>
 
     <div class="grid gap-5">
       {projects.map((project) => (
-        <article class="card-surface rounded-2xl p-6">
-          <h2 class="font-serif text-2xl text-[var(--ink)]">{project.name}</h2>
+        <article class="section-rail p-0 pt-8">
+          <h2 class="text-3xl font-semibold tracking-[-0.04em] text-[var(--ink)]">
+            {project.name}
+          </h2>
           <p class="mt-4 leading-7 text-[var(--muted)]">{project.summary}</p>
           <div class="mt-5 flex flex-wrap gap-2">
             {project.stack.map((item) => (
-              <span class="rounded-md border border-[var(--line)] bg-white/70 px-3 py-1 text-sm text-[var(--muted)]">
+              <span class="rounded-full bg-[var(--surface-strong)] px-3 py-1 text-sm text-[var(--muted)]">
                 {item}
               </span>
             ))}

@@ -28,11 +28,11 @@ const { tag, posts } = Astro.props as Props;
 ---
 
 <BaseLayout title={`标签：${tag.label}`} description={`查看所有与 ${tag.label} 相关的文章。`}>
-  <section class="reveal space-y-6">
-    <div class="card-surface rounded-2xl px-7 py-10 sm:px-10 sm:py-12">
-      <p class="text-sm uppercase tracking-[0.3em] text-[var(--accent)]">Tag Archive</p>
-      <h1 class="mt-4 font-serif text-5xl text-[var(--ink)]">#{tag.label}</h1>
-      <p class="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)]">
+  <section class="reveal mx-auto max-w-5xl space-y-6">
+    <div class="px-7 py-14 text-center sm:px-10 sm:py-16">
+      <p class="section-kicker">Tag Archive</p>
+      <h1 class="section-heading-sm mt-3">#{tag.label}</h1>
+      <p class="section-copy mx-auto mt-6">
         这个标签下共有 {posts.length} 篇文章。你可以用这种方式组织系列内容、主题归档或长期专题。
       </p>
     </div>

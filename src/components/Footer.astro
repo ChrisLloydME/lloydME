@@ -5,13 +5,11 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class="px-4 pb-10 sm:px-6">
-  <div class="mx-auto max-w-6xl">
-    <div
-      class="card-surface flex flex-col gap-4 rounded-2xl px-6 py-6 text-sm text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between"
-    >
+  <div class="mx-auto max-w-[1120px] border-t border-[var(--line)] pt-6">
+    <div class="flex flex-col gap-4 text-sm text-[var(--muted)] sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <p class="font-serif text-lg text-[var(--ink)]">{SITE_TITLE}</p>
-        <p>Built as a static Astro site, ready for GitHub + Cloudflare Pages deployment.</p>
+        <p class="font-medium tracking-[-0.02em] text-[var(--ink)]">{SITE_TITLE}</p>
+        <p class="mt-1">A static site for writing, projects, and long-term notes.</p>
       </div>
       <p>&copy; {currentYear} Lloyd. All rights reserved.</p>
     </div>

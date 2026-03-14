@@ -10,11 +10,11 @@ const posts = sortBlogPosts(
 ---
 
 <BaseLayout title="博客">
-  <section class="reveal space-y-6">
-    <div class="card-surface rounded-2xl px-7 py-10 sm:px-10 sm:py-12">
-      <p class="text-sm uppercase tracking-[0.3em] text-[var(--accent)]">Blog</p>
-      <h1 class="mt-4 font-serif text-5xl text-[var(--ink)]">全部文章</h1>
-      <p class="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)]">
+  <section class="reveal mx-auto max-w-5xl space-y-6">
+    <div class="px-7 py-14 text-center sm:px-10 sm:py-16">
+      <p class="section-kicker">Blog</p>
+      <h1 class="section-heading-sm mt-3">全部文章</h1>
+      <p class="section-copy mx-auto mt-6">
         文章按发布时间倒序排列。这个页面适合作为完整索引，也可以继续扩展为系列、年份归档或搜索入口。
       </p>
       <p class="mt-6 text-sm text-[var(--muted)]">当前共有 {posts.length} 篇公开文章。</p>
