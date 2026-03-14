@@ -76,6 +76,11 @@ a:not([class]) {
   padding: 0;
 }
 
+.home-feature-stack {
+  display: grid;
+  gap: 0;
+}
+
 .home-feature-card {
   display: grid;
   grid-template-columns: minmax(0, 1.9fr) minmax(18rem, 1fr);
@@ -101,7 +106,7 @@ a:not([class]) {
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-end;
-  padding: clamp(1rem, 2vw, 2rem) clamp(1rem, 2vw, 2rem) clamp(2rem, 4vw, 4rem);
+  padding: clamp(1rem, 2vw, 2rem) clamp(2rem, 4vw, 4rem) clamp(2rem, 4vw, 4rem);
 }
 
 .home-feature-kicker {
@@ -120,7 +125,7 @@ a:not([class]) {
   margin-top: 1rem;
   max-width: 5.5em;
   font-family: var(--font-title);
-  font-size: clamp(4rem, 7vw, 7rem);
+  font-size: clamp(5rem, 8vw, 8rem);
   font-weight: 600;
   line-height: 0.94;
   letter-spacing: -0.03em;
@@ -128,11 +133,90 @@ a:not([class]) {
   color: rgba(255, 253, 248, 0.85);
 }
 
+.home-project-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: min(39rem, calc(100vh - 11rem));
+  background:
+    radial-gradient(30rem 20rem at 50% 24%, rgba(88, 135, 255, 0.12) 0%, rgba(88, 135, 255, 0) 70%),
+    linear-gradient(180deg, #ffffff 0%, #f7f8fb 56%, #eef2f7 100%);
+  overflow: hidden;
+}
+
+.home-project-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: clamp(2.5rem, 5vw, 4.5rem) 1rem 0;
+}
+
+.home-project-glow {
+  position: absolute;
+  width: min(26rem, 56vw);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 58% 42%, rgba(255, 82, 96, 0.12) 0%, rgba(255, 82, 96, 0.04) 22%, rgba(255, 82, 96, 0) 46%),
+    radial-gradient(circle at 50% 50%, rgba(84, 129, 255, 0.26) 0%, rgba(84, 129, 255, 0.12) 26%, rgba(84, 129, 255, 0) 62%);
+  filter: blur(16px);
+}
+
+.home-project-icon {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: clamp(10rem, 20vw, 14rem);
+  height: auto;
+  border-radius: clamp(2rem, 4vw, 3.2rem);
+  overflow: hidden;
+  box-shadow:
+    0 32px 80px rgba(32, 40, 64, 0.14),
+    0 6px 18px rgba(255, 255, 255, 0.9);
+}
+
+.home-project-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: clamp(1.25rem, 2.4vw, 2rem) clamp(1rem, 2vw, 2rem) clamp(2.4rem, 4vw, 3.5rem);
+  text-align: center;
+}
+
+.home-project-title {
+  margin-top: 1rem;
+  font-family: var(--font-title);
+  font-size: clamp(3rem, 5.2vw, 4.9rem);
+  font-weight: 600;
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  color: #0f1728;
+}
+
+.home-project-summary {
+  margin-top: 1rem;
+  max-width: 30rem;
+  font-size: clamp(1rem, 1.1vw, 1.28rem);
+  line-height: 1.5;
+  color: rgba(15, 23, 40, 0.58);
+}
+
 .section-kicker {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  padding: 0.45rem 0.8rem;
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: var(--accent);
+  color: var(--muted);
 }
 
 .section-heading {
@@ -389,7 +473,10 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
 }
 
 .article-page-blue .section-kicker {
-  color: rgba(255, 255, 255, 0.78);
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(36, 52, 78, 0.24);
+  color: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(10px);
 }
 
 .article-page-blue .section-copy,
@@ -518,6 +605,10 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
 }
 
 @media (max-width: 640px) {
+  .home-feature-stack {
+    gap: 0;
+  }
+
   .home-feature {
     padding-top: 0;
   }
@@ -527,8 +618,25 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
     min-height: auto;
   }
 
+  .home-project-card {
+    min-height: auto;
+  }
+
   .home-feature-image-wrap {
     aspect-ratio: 4 / 3.2;
+  }
+
+  .home-project-visual {
+    padding-top: 2rem;
+  }
+
+  .home-project-glow {
+    width: 68vw;
+  }
+
+  .home-project-icon {
+    width: min(42vw, 12rem);
+    border-radius: 1.8rem;
   }
 
   .home-feature-copy {
@@ -536,10 +644,23 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
     padding: 1.1rem 1rem 1.2rem;
   }
 
+  .home-project-copy {
+    padding: 1rem 1rem 1.5rem;
+  }
+
   .home-feature-title {
     max-width: none;
     font-size: clamp(2.4rem, 10vw, 3.5rem);
     text-align: left;
+  }
+
+  .home-project-title {
+    font-size: clamp(2.3rem, 9vw, 3.2rem);
+  }
+
+  .home-project-summary {
+    max-width: none;
+    font-size: 1rem;
   }
 
   .article-page-blue .article-hero-copy-blue {

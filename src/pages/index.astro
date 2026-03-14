@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { projects } from "../data/projects";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getPostSlug, sortBlogPosts } from "../utils/blog";
 
@@ -8,26 +9,52 @@ const posts = sortBlogPosts(
 );
 const featuredPost = posts.find((post) => getPostSlug(post) === "fly-emirates-fly-better") ?? posts[0];
 const featuredPostSlug = featuredPost ? getPostSlug(featuredPost) : "/blog/";
+const audioMator = projects.find((project) => project.slug === "audiomator");
 ---
 
-<BaseLayout fullBleed>
-  <section class="home-feature">
-    <a class="home-feature-card" href={featuredPost ? `/blog/${featuredPostSlug}/` : "/blog/"}>
-      <div class="home-feature-image-wrap">
-        <img
-          src="/images/home/front-page-fly-emirates.jpg"
-          alt="A plane trail rising across a blue sky."
-          class="home-feature-image"
-        />
-      </div>
+<BaseLayout fullBleed mainClass="pb-0">
+  <section class="home-feature-stack">
+    <div class="home-feature">
+      <a class="home-feature-card" href={featuredPost ? `/blog/${featuredPostSlug}/` : "/blog/"}>
+        <div class="home-feature-image-wrap">
+          <img
+            src="/images/home/front-page-fly-emirates.jpg"
+            alt="A plane trail rising across a blue sky."
+            class="home-feature-image"
+          />
+        </div>
 
-      <div class="home-feature-copy">
-        <span class="home-feature-kicker">Blog</span>
-        <h1 class="home-feature-title">
-          Fly&nbsp;Emirates,<br />
-          Fly Better
-        </h1>
-      </div>
-    </a>
+        <div class="home-feature-copy">
+          <span class="home-feature-kicker">Blog</span>
+          <h1 class="home-feature-title">
+            Fly&nbsp;Emirates,<br />
+            Fly Better
+          </h1>
+        </div>
+      </a>
+    </div>
+
+    {
+      audioMator && (
+        <div class="home-feature">
+          <a class="home-project-card" href={`/projects/${audioMator.slug}/`}>
+            <div class="home-project-visual">
+              <div class="home-project-glow"></div>
+              <img
+                src={audioMator.icon}
+                alt={`${audioMator.name} app icon`}
+                class="home-project-icon"
+              />
+            </div>
+
+            <div class="home-project-copy">
+              <span class="home-feature-kicker">Project</span>
+              <h2 class="home-project-title">{audioMator.name}</h2>
+              <p class="home-project-summary">{audioMator.headline}</p>
+            </div>
+          </a>
+        </div>
+      )
+    }
   </section>
 </BaseLayout>

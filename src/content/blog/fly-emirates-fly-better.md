@@ -8,7 +8,7 @@ tags:
   - travel
 draft: false
 featured: true
-heroImage: /images/blog/fly-emirates-fly-better-cover-baked.jpg
+heroImage: /images/blog/fly-emirates-fly-better-cover.jpg
 heroImageAlt: Infinity pool overlooking the sea and a hazy skyline.
 pageTheme: blue-immersive
 ---
