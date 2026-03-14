@@ -1,3 +1,5 @@
+import audiomatorIcon from "../assets/projects/audiomator-icon.png";
+
 export type ProjectCapability = {
   title: string;
   summary: string;
@@ -22,7 +24,7 @@ export const projects: Project[] = [
     slug: "audiomator",
     name: "AudioMator",
     category: "macOS App",
-    icon: "/images/projects/audiomator-icon.png",
+    icon: audiomatorIcon.src,
     headline: "Clean Up Your Audio Metadata, Right on Your Mac",
     heroHeadline: "Metadata, in order.",
     summary:

@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import frontPageFlyEmirates from "../assets/home/front-page-fly-emirates.jpg";
 import { projects } from "../data/projects";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { withBase } from "../utils/paths";
@@ -19,7 +20,7 @@ const audioMator = projects.find((project) => project.slug === "audiomator");
       <a class="home-feature-card" href={featuredPostHref}>
         <div class="home-feature-image-wrap">
           <img
-            src={withBase("/images/home/front-page-fly-emirates.jpg")}
+            src={frontPageFlyEmirates.src}
             alt="A plane trail rising across a blue sky."
             class="home-feature-image"
           />

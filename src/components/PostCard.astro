@@ -24,7 +24,7 @@ const postHref = withBase(`/blog/${postSlug}/`);
       post.data.heroImage && (
         <a class="block h-full overflow-hidden bg-[var(--surface-strong)]" href={postHref}>
           <img
-            src={withBase(post.data.heroImage)}
+            src={post.data.heroImage.src}
             alt={post.data.heroImageAlt ?? post.data.title}
             class="h-52 w-full object-cover object-center transition duration-300 md:h-full md:min-h-[17rem] md:hover:scale-[1.02]"
           />

@@ -42,7 +42,7 @@ const isBlueImmersive = post.data.pageTheme === "blue-immersive";
         post.data.heroImage && (
           <div class:list={["article-cover-wrap", isBlueImmersive && "article-cover-wrap-blue"]}>
             <img
-              src={withBase(post.data.heroImage)}
+              src={post.data.heroImage.src}
               alt={post.data.heroImageAlt ?? post.data.title}
               class:list={["article-cover", isBlueImmersive && "article-cover-blue"]}
             />
