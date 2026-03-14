@@ -1,14 +1,6 @@
-import { defineConfig } from "astro/config";
-import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  output: "static",
-  vite: {
-    plugins: [tailwindcss()],
-  },
-  markdown: {
-    shikiConfig: {
-      theme: "github-light",
-    },
-  },
+  site: 'https://chrislloydme.github.io',
+  base: '/lloydME',
 });
