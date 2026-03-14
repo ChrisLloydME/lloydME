@@ -37,7 +37,7 @@ const postSlug = getPostSlug(post);
         <span>{post.data.tags.length > 0 ? `${post.data.tags.length} tags` : "Essay"}</span>
       </div>
 
-      <h3 class="text-3xl font-semibold leading-tight tracking-[-0.04em] text-[var(--ink)]">
+      <h3 class="font-[family:var(--font-title)] text-3xl font-semibold leading-tight tracking-[-0.015em] text-[var(--ink)]">
         <a class="transition hover:text-[var(--accent)]" href={`/blog/${postSlug}/`}>
           {post.data.title}
         </a>

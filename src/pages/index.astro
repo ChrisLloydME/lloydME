@@ -1,66 +1,33 @@
 ---
 import { getCollection } from "astro:content";
-import Hero from "../components/Hero.astro";
-import PostCard from "../components/PostCard.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { sortBlogPosts } from "../utils/blog";
+import { getPostSlug, sortBlogPosts } from "../utils/blog";
 
 const posts = sortBlogPosts(
   (await getCollection("blog")).filter((post) => !post.data.draft),
 );
-
-const latestPosts = posts.slice(0, 3);
-const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 2);
-
+const featuredPost = posts.find((post) => getPostSlug(post) === "fly-emirates-fly-better") ?? posts[0];
+const featuredPostSlug = featuredPost ? getPostSlug(featuredPost) : "/blog/";
 ---
 
-<BaseLayout>
-  <Hero
-    eyebrow="A content-first personal site"
-    title="Writing, projects, and long-term work should each have a clear place."
-    summary="This starter combines a personal site and blog into a fully static Astro build focused on readability, clear navigation, and long-term maintainability."
-    actions={[
-      { href: "/blog/", label: "Browse all posts" },
-      { href: "/about/", label: "About the author", tone: "secondary" },
-    ]}
-    metrics={[
-      { value: `${posts.length}`, label: "Published posts" },
-      { value: `${featuredPosts.length || latestPosts.length}`, label: "Featured items on the homepage" },
-      { value: "100%", label: "Static output, no database required" },
-    ]}
-  />
+<BaseLayout fullBleed>
+  <section class="home-feature">
+    <a class="home-feature-card" href={featuredPost ? `/blog/${featuredPostSlug}/` : "/blog/"}>
+      <div class="home-feature-image-wrap">
+        <img
+          src="/images/home/front-page-fly-emirates.jpg"
+          alt="A plane trail rising across a blue sky."
+          class="home-feature-image"
+        />
+      </div>
 
-  <section class="section-rail mt-10 space-y-5">
-    <div class="mx-auto max-w-3xl text-center">
-      <p class="section-kicker">Latest Posts</p>
-      <h2 class="section-heading-sm mt-3">What&apos;s new</h2>
-      <p class="section-copy mx-auto mt-4">
-        Surface recent writing like a product homepage so visitors can scan quickly and decide what to read next.
-      </p>
-      <a class="link-action mt-5" href="/blog/">
-        View all posts
-        <span aria-hidden="true">&gt;</span>
-      </a>
-    </div>
-
-    <div class="grid gap-5">
-      {latestPosts.map((post) => <PostCard post={post} />)}
-    </div>
-  </section>
-
-  <section class="section-rail mt-16">
-    <div class="mx-auto max-w-3xl text-center">
-      <p class="section-kicker">Featured Essays</p>
-      <h2 class="section-heading-sm mt-3">Start here</h2>
-      <p class="section-copy mx-auto mt-4">
-        Use this space for the writing you want new visitors to read first, whether that&apos;s a signature essay, a series entry point, or an ongoing theme.
-      </p>
-    </div>
-
-    <div class="mt-6 grid gap-5">
-      {(featuredPosts.length > 0 ? featuredPosts : latestPosts.slice(0, 2)).map((post) => (
-        <PostCard post={post} variant="feature" />
-      ))}
-    </div>
+      <div class="home-feature-copy">
+        <span class="home-feature-kicker">Blog</span>
+        <h1 class="home-feature-title">
+          Fly&nbsp;Emirates,<br />
+          Fly Better
+        </h1>
+      </div>
+    </a>
   </section>
 </BaseLayout>
