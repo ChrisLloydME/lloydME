@@ -1,23 +1,7 @@
 ---
+import ProjectCard from "../components/ProjectCard.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-const projects = [
-  {
-    name: "Content OS",
-    summary: "A content workflow experiment built around writing, archiving, and publishing.",
-    stack: ["Astro", "Markdown", "Cloudflare Pages"],
-  },
-  {
-    name: "Reading Notes",
-    summary: "A searchable personal knowledge page for highlights, excerpts, and topic indexes.",
-    stack: ["TypeScript", "Static Site", "Search"],
-  },
-  {
-    name: "Minimal Portfolio",
-    summary: "A clean project showcase that emphasizes narrative and context over visual clutter.",
-    stack: ["Astro", "Tailwind CSS", "Design System"],
-  },
-];
+import { projects } from "../data/projects";
 ---
 
 <BaseLayout title="Projects">
@@ -26,26 +10,12 @@ const projects = [
       <p class="section-kicker">Projects</p>
       <h1 class="section-heading-sm mt-3">Projects and experiments</h1>
       <p class="section-copy mx-auto mt-6">
-        This sample page highlights representative products, open-source work, research directions, or long-running experiments so visitors can quickly understand what you build.
+        A place to highlight products, tools, and experiments with enough context for visitors to quickly understand what they do.
       </p>
     </div>
 
-    <div class="grid gap-5">
-      {projects.map((project) => (
-        <article class="section-rail p-0 pt-8">
-          <h2 class="text-3xl font-semibold tracking-[-0.04em] text-[var(--ink)]">
-            {project.name}
-          </h2>
-          <p class="mt-4 leading-7 text-[var(--muted)]">{project.summary}</p>
-          <div class="mt-5 flex flex-wrap gap-2">
-            {project.stack.map((item) => (
-              <span class="rounded-full bg-[var(--surface-strong)] px-3 py-1 text-sm text-[var(--muted)]">
-                {item}
-              </span>
-            ))}
-          </div>
-        </article>
-      ))}
+    <div class="section-rail grid gap-5 pt-8">
+      {projects.map((project) => <ProjectCard project={project} />)}
     </div>
   </section>
 </BaseLayout>
