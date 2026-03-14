@@ -7,10 +7,12 @@ const normalizePath = (path: string) =>
 const pathname = normalizePath(Astro.url.pathname);
 ---
 
-<header class="sticky top-0 z-40 border-b border-[var(--line)] bg-white/88 backdrop-blur-xl">
+<header
+  class="sticky top-0 z-40 border-b border-white/10 bg-[rgba(29,29,31,0.88)] backdrop-blur-xl"
+>
   <div class="mx-auto max-w-[1120px] px-4 py-4 sm:px-6">
     <nav class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <a class="text-lg font-semibold tracking-[-0.03em] text-[var(--ink)] sm:text-xl" href="/">
+      <a class="text-lg font-semibold tracking-[-0.03em] text-white sm:text-xl" href="/">
         {SITE_TITLE}
       </a>
 
@@ -27,8 +29,8 @@ const pathname = normalizePath(Astro.url.pathname);
                 class:list={[
                   "border-b border-transparent px-1 py-1.5 text-[13px] font-medium transition sm:px-2 sm:text-sm",
                   isActive
-                    ? "border-[var(--ink)] text-[var(--ink)]"
-                    : "text-[var(--muted)] hover:border-[var(--line)] hover:text-[var(--ink)]",
+                    ? "border-white text-white"
+                    : "text-white/72 hover:border-white/20 hover:text-white",
                 ]}
                 href={item.href}
                 aria-current={isActive ? "page" : undefined}
