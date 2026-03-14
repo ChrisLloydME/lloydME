@@ -9,6 +9,7 @@ tags:
 draft: false
 featured: true
 heroImage: ./fly-emirates-fly-better-cover-baked.jpg
+cardImage: ./fly-emirates-fly-better-cover.jpg
 heroImageAlt: Infinity pool overlooking the sea and a hazy skyline.
 pageTheme: blue-immersive
 ---

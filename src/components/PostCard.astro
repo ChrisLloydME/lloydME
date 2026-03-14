@@ -11,6 +11,7 @@ interface Props {
 const { post, variant = "default" } = Astro.props as Props;
 const postSlug = getPostSlug(post);
 const postHref = withBase(`/blog/${postSlug}/`);
+const postCardImage = post.data.cardImage ?? post.data.heroImage;
 ---
 
 <article
@@ -21,10 +22,10 @@ const postHref = withBase(`/blog/${postSlug}/`);
 >
   <div class:list={["grid h-full min-h-0", post.data.heroImage && "md:grid-cols-[minmax(15rem,22rem)_minmax(0,1fr)]"]}>
     {
-      post.data.heroImage && (
+      postCardImage && (
         <a class="block h-full overflow-hidden bg-[var(--surface-strong)]" href={postHref}>
           <img
-            src={post.data.heroImage.src}
+            src={postCardImage.src}
             alt={post.data.heroImageAlt ?? post.data.title}
             class="h-52 w-full object-cover object-center transition duration-300 md:h-full md:min-h-[17rem] md:hover:scale-[1.02]"
           />

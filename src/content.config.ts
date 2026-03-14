@@ -16,6 +16,7 @@ const blog = defineCollection({
       featured: z.boolean().default(false),
       updatedDate: z.coerce.date().optional(),
       heroImage: image().optional(),
+      cardImage: image().optional(),
       heroImageAlt: z.string().optional(),
       pageTheme: z.enum(["blue-immersive"]).optional(),
     }),
