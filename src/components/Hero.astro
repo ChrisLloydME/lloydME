@@ -1,0 +1,71 @@
+---
+type Action = {
+  href: string;
+  label: string;
+  tone?: "primary" | "secondary";
+};
+
+type Metric = {
+  value: string;
+  label: string;
+};
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  summary: string;
+  actions?: Action[];
+  metrics?: Metric[];
+}
+
+const {
+  eyebrow,
+  title,
+  summary,
+  actions = [],
+  metrics = [],
+} = Astro.props as Props;
+---
+
+<section class="reveal">
+  <div class="card-surface rounded-2xl px-7 py-10 sm:px-10 sm:py-12">
+    <p class="text-sm uppercase tracking-[0.32em] text-[var(--accent)]">{eyebrow}</p>
+    <h1 class="mt-5 max-w-3xl font-serif text-5xl leading-[1.05] text-[var(--ink)] sm:text-6xl">
+      {title}
+    </h1>
+    <p class="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)]">{summary}</p>
+
+    {
+      actions.length > 0 && (
+        <div class="mt-8 flex flex-wrap gap-3">
+          {actions.map((action) => (
+            <a
+              class:list={[
+                "rounded-lg px-5 py-3 text-sm transition",
+                action.tone === "secondary"
+                  ? "border border-[var(--line)] bg-white/70 text-[var(--ink)] hover:bg-[var(--accent-soft)]"
+                  : "bg-[var(--ink)] text-white hover:bg-[var(--accent)]",
+              ]}
+              href={action.href}
+            >
+              {action.label}
+            </a>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      metrics.length > 0 && (
+        <div class="mt-10 grid gap-4 border-t border-[var(--line)] pt-8 sm:grid-cols-3">
+          {metrics.map((metric) => (
+            <div class="rounded-xl border border-[var(--line)] bg-white/70 p-5">
+              <p class="font-serif text-3xl text-[var(--ink)]">{metric.value}</p>
+              <p class="mt-2 text-sm text-[var(--muted)]">{metric.label}</p>
+            </div>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</section>

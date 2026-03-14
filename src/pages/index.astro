@@ -1,0 +1,66 @@
+---
+import { getCollection } from "astro:content";
+import Hero from "../components/Hero.astro";
+import PostCard from "../components/PostCard.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { sortBlogPosts } from "../utils/blog";
+
+const posts = sortBlogPosts(
+  (await getCollection("blog")).filter((post) => !post.data.draft),
+);
+
+const latestPosts = posts.slice(0, 3);
+const featuredPosts = posts.filter((post) => post.data.featured).slice(0, 2);
+
+---
+
+<BaseLayout>
+  <Hero
+    eyebrow="内容优先的个人网站"
+    title="写作、项目与长期积累，都应该有自己的位置。"
+    summary="这个项目把个人网站和博客系统组合成一个纯静态 Astro 站点。它重点关注阅读体验、清晰导航和长期可维护性，而不是后台系统或复杂交互。"
+    actions={[
+      { href: "/blog/", label: "浏览全部文章" },
+      { href: "/about/", label: "了解作者", tone: "secondary" },
+    ]}
+    metrics={[
+      { value: `${posts.length}`, label: "当前示例文章数量" },
+      { value: `${featuredPosts.length || latestPosts.length}`, label: "首页精选内容" },
+      { value: "100%", label: "静态输出，无需数据库" },
+    ]}
+  />
+
+  <section class="mt-16 space-y-5">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <p class="text-sm uppercase tracking-[0.28em] text-[var(--accent)]">Latest Posts</p>
+        <h2 class="mt-3 font-serif text-3xl text-[var(--ink)]">最新文章</h2>
+      </div>
+      <a class="text-sm text-[var(--muted)] hover:text-[var(--accent)]" href="/blog/">
+        查看全部
+      </a>
+    </div>
+
+    <div class="grid gap-5">
+      {latestPosts.map((post) => <PostCard post={post} />)}
+    </div>
+  </section>
+
+  <section class="mt-16">
+    <div class="flex items-end justify-between gap-4">
+      <div>
+        <p class="text-sm uppercase tracking-[0.28em] text-[var(--accent)]">Featured Essays</p>
+        <h2 class="mt-3 font-serif text-3xl text-[var(--ink)]">精选文章</h2>
+      </div>
+      <p class="max-w-xl text-sm leading-6 text-[var(--muted)]">
+        这里可以放你最希望新访客首先读到的文章，比如代表性写作、系列入口或者长期主题。
+      </p>
+    </div>
+
+    <div class="mt-6 grid gap-5">
+      {(featuredPosts.length > 0 ? featuredPosts : latestPosts.slice(0, 2)).map((post) => (
+        <PostCard post={post} variant="feature" />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

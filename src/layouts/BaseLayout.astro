@@ -1,0 +1,39 @@
+---
+import Footer from "../components/Footer.astro";
+import Navbar from "../components/Navbar.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = SITE_DESCRIPTION } = Astro.props as Props;
+const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content={description} name="description" />
+    <meta content={SITE_TITLE} name="apple-mobile-web-app-title" />
+    <meta content="#14213d" name="theme-color" />
+    <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+    <title>{pageTitle}</title>
+    <slot name="head" />
+  </head>
+  <body>
+    <div class="relative min-h-screen">
+      <Navbar />
+      <main class="px-4 pb-16 sm:px-6">
+        <div class="mx-auto max-w-6xl">
+          <slot />
+        </div>
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

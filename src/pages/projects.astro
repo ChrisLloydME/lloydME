@@ -1,0 +1,49 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const projects = [
+  {
+    name: "Content OS",
+    summary: "一个围绕写作、归档和发布流程整理出来的内容工作流实验。",
+    stack: ["Astro", "Markdown", "Cloudflare Pages"],
+  },
+  {
+    name: "Reading Notes",
+    summary: "把书摘、摘录和主题索引整理成长期可搜索的个人知识页面。",
+    stack: ["TypeScript", "Static Site", "Search"],
+  },
+  {
+    name: "Minimal Portfolio",
+    summary: "一个强调项目脉络而不是视觉堆叠的简洁项目展示页。",
+    stack: ["Astro", "Tailwind CSS", "Design System"],
+  },
+];
+---
+
+<BaseLayout title="项目">
+  <section class="reveal space-y-6">
+    <div class="card-surface rounded-2xl px-7 py-10 sm:px-10 sm:py-12">
+      <p class="text-sm uppercase tracking-[0.3em] text-[var(--accent)]">Projects</p>
+      <h1 class="mt-4 font-serif text-5xl text-[var(--ink)]">项目与实验</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)]">
+        这是一个示例 Projects 页面。你可以把代表性的产品、开源项目、研究主题或长期实验放在这里，帮助访客快速理解你的实践方向。
+      </p>
+    </div>
+
+    <div class="grid gap-5">
+      {projects.map((project) => (
+        <article class="card-surface rounded-2xl p-6">
+          <h2 class="font-serif text-2xl text-[var(--ink)]">{project.name}</h2>
+          <p class="mt-4 leading-7 text-[var(--muted)]">{project.summary}</p>
+          <div class="mt-5 flex flex-wrap gap-2">
+            {project.stack.map((item) => (
+              <span class="rounded-md border border-[var(--line)] bg-white/70 px-3 py-1 text-sm text-[var(--muted)]">
+                {item}
+              </span>
+            ))}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

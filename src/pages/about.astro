@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="关于">
+  <section class="reveal mx-auto max-w-4xl space-y-6">
+    <div class="card-surface rounded-2xl px-7 py-10 sm:px-10 sm:py-12">
+      <p class="text-sm uppercase tracking-[0.3em] text-[var(--accent)]">About</p>
+      <h1 class="mt-4 font-serif text-5xl text-[var(--ink)]">关于作者</h1>
+      <p class="mt-6 max-w-2xl text-lg leading-8 text-[var(--muted)]">
+        这里是示例作者介绍页。你可以在这一页说明自己的背景、关注的主题、写作方向，以及这个网站存在的目的。
+      </p>
+    </div>
+
+    <div class="space-y-5">
+      <section class="card-surface rounded-2xl p-6">
+        <h2 class="font-serif text-2xl text-[var(--ink)]">我在写什么</h2>
+        <p class="mt-4 leading-7 text-[var(--muted)]">
+          这个博客适合承载技术笔记、工作方法、产品观察、项目复盘，或者任何需要长期沉淀的内容。
+        </p>
+      </section>
+
+      <section class="card-surface rounded-2xl p-6">
+        <h2 class="font-serif text-2xl text-[var(--ink)]">我如何工作</h2>
+        <p class="mt-4 leading-7 text-[var(--muted)]">
+          如果你希望网站简单、稳定、可长期维护，那么文件化内容、静态构建和自动部署通常是更理性的组合。
+        </p>
+      </section>
+
+      <section class="card-surface rounded-2xl p-6">
+        <h2 class="font-serif text-2xl text-[var(--ink)]">关注主题</h2>
+        <p class="mt-4 leading-7 text-[var(--muted)]">
+          示例内容包括写作系统、个人网站、项目组织方式，以及如何用更低的维护成本建立长期表达阵地。
+        </p>
+      </section>
+
+      <section class="card-surface rounded-2xl p-6">
+        <h2 class="font-serif text-2xl text-[var(--ink)]">接下来可以补充</h2>
+        <p class="mt-4 leading-7 text-[var(--muted)]">
+          你可以继续加入头像、社交链接、时间线、工作经历，或者一个更贴近你个人风格的站点介绍。
+        </p>
+      </section>
+    </div>
+  </section>
+</BaseLayout>
