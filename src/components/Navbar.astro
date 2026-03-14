@@ -1,5 +1,6 @@
 ---
 import { NAVIGATION, SITE_TITLE } from "../consts";
+import { withBase } from "../utils/paths";
 
 const normalizePath = (path: string) =>
   path === "/" ? "/" : path.replace(/\/+$/, "");
@@ -12,14 +13,15 @@ const pathname = normalizePath(Astro.url.pathname);
 >
   <div class="mx-auto max-w-[1120px] px-4 py-4 sm:px-6">
     <nav class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <a class="font-[family:var(--font-title)] text-lg font-semibold tracking-[-0.01em] text-white sm:text-xl" href="/">
+      <a class="font-[family:var(--font-title)] text-lg font-semibold tracking-[-0.01em] text-white sm:text-xl" href={withBase("/")}>
         {SITE_TITLE}
       </a>
 
       <div class="flex flex-wrap items-center gap-1.5">
         {
           NAVIGATION.map((item) => {
-            const itemPath = normalizePath(item.href);
+            const itemHref = withBase(item.href);
+            const itemPath = normalizePath(itemHref);
             const isActive =
               pathname === itemPath ||
               (itemPath !== "/" && pathname.startsWith(`${itemPath}/`));
@@ -32,7 +34,7 @@ const pathname = normalizePath(Astro.url.pathname);
                     ? "border-white text-white"
                     : "text-white/72 hover:border-white/20 hover:text-white",
                 ]}
-                href={item.href}
+                href={itemHref}
                 aria-current={isActive ? "page" : undefined}
               >
                 {item.label}

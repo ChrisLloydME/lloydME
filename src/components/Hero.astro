@@ -1,4 +1,6 @@
 ---
+import { withBase } from "../utils/paths";
+
 type Action = {
   href: string;
   label: string;
@@ -44,7 +46,7 @@ const {
                 "link-action",
                 action.tone === "secondary" && "text-[#2997ff]",
               ]}
-              href={action.href}
+              href={withBase(action.href)}
             >
               {action.label}
               <span aria-hidden="true">&gt;</span>

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { projects, type Project } from "../../data/projects";
+import { withBase } from "../../utils/paths";
 
 export function getStaticPaths() {
   return projects.map((project) => ({
@@ -19,7 +20,7 @@ const projectMeta = [project.category, ...project.tags].join(" · ");
       <div class="mx-auto max-w-[1440px] px-6 py-[4.75rem] sm:px-10 sm:py-24 lg:py-28">
         <div class="mx-auto max-w-6xl text-center">
           <img
-            src={project.icon}
+            src={withBase(project.icon)}
             alt={`${project.name} app icon`}
             class="app-icon-hero-shadow mx-auto h-36 w-36 rounded-[32px] sm:h-40 sm:w-40 sm:rounded-[36px] lg:h-44 lg:w-44 lg:rounded-[40px]"
           />

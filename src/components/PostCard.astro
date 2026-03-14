@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { withBase } from "../utils/paths";
 import { formatDate, getPostSlug, tagToSlug } from "../utils/blog";
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 
 const { post, variant = "default" } = Astro.props as Props;
 const postSlug = getPostSlug(post);
+const postHref = withBase(`/blog/${postSlug}/`);
 ---
 
 <article
@@ -20,9 +22,9 @@ const postSlug = getPostSlug(post);
   <div class:list={["grid h-full min-h-0", post.data.heroImage && "md:grid-cols-[minmax(15rem,22rem)_minmax(0,1fr)]"]}>
     {
       post.data.heroImage && (
-        <a class="block h-full overflow-hidden bg-[var(--surface-strong)]" href={`/blog/${postSlug}/`}>
+        <a class="block h-full overflow-hidden bg-[var(--surface-strong)]" href={postHref}>
           <img
-            src={post.data.heroImage}
+            src={withBase(post.data.heroImage)}
             alt={post.data.heroImageAlt ?? post.data.title}
             class="h-52 w-full object-cover object-center transition duration-300 md:h-full md:min-h-[17rem] md:hover:scale-[1.02]"
           />
@@ -39,7 +41,7 @@ const postSlug = getPostSlug(post);
         </div>
 
         <h3 class="max-w-3xl font-[family:var(--font-title)] text-2xl font-semibold leading-[1.08] tracking-[-0.02em] text-[var(--ink)] sm:text-[2rem]">
-          <a class="transition hover:text-[var(--accent)]" href={`/blog/${postSlug}/`}>
+          <a class="transition hover:text-[var(--accent)]" href={postHref}>
             {post.data.title}
           </a>
         </h3>
@@ -60,7 +62,7 @@ const postSlug = getPostSlug(post);
               {post.data.tags.map((tag) => (
                 <a
                   class="rounded-full bg-[var(--surface-strong)] px-3 py-1 text-sm text-[var(--muted)] transition hover:text-[var(--accent)]"
-                  href={`/tags/${tagToSlug(tag)}/`}
+                  href={withBase(`/tags/${tagToSlug(tag)}/`)}
                 >
                   #{tag}
                 </a>
@@ -69,7 +71,7 @@ const postSlug = getPostSlug(post);
           )
         }
 
-        <a class="link-action shrink-0 text-sm" href={`/blog/${postSlug}/`}>
+        <a class="link-action shrink-0 text-sm" href={postHref}>
           Read article
           <span aria-hidden="true">&gt;</span>
         </a>

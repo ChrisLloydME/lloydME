@@ -2,23 +2,24 @@
 import { getCollection } from "astro:content";
 import { projects } from "../data/projects";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../utils/paths";
 import { getPostSlug, sortBlogPosts } from "../utils/blog";
 
 const posts = sortBlogPosts(
   (await getCollection("blog")).filter((post) => !post.data.draft),
 );
 const featuredPost = posts.find((post) => getPostSlug(post) === "fly-emirates-fly-better") ?? posts[0];
-const featuredPostSlug = featuredPost ? getPostSlug(featuredPost) : "/blog/";
+const featuredPostHref = featuredPost ? withBase(`/blog/${getPostSlug(featuredPost)}/`) : withBase("/blog/");
 const audioMator = projects.find((project) => project.slug === "audiomator");
 ---
 
 <BaseLayout fullBleed mainClass="pb-0">
   <section class="home-feature-stack">
     <div class="home-feature">
-      <a class="home-feature-card" href={featuredPost ? `/blog/${featuredPostSlug}/` : "/blog/"}>
+      <a class="home-feature-card" href={featuredPostHref}>
         <div class="home-feature-image-wrap">
           <img
-            src="/images/home/front-page-fly-emirates.jpg"
+            src={withBase("/images/home/front-page-fly-emirates.jpg")}
             alt="A plane trail rising across a blue sky."
             class="home-feature-image"
           />
@@ -37,11 +38,11 @@ const audioMator = projects.find((project) => project.slug === "audiomator");
     {
       audioMator && (
         <div class="home-feature">
-          <a class="home-project-card" href={`/projects/${audioMator.slug}/`}>
+          <a class="home-project-card" href={withBase(`/projects/${audioMator.slug}/`)}>
             <div class="home-project-visual">
               <div class="home-project-glow"></div>
               <img
-                src={audioMator.icon}
+                src={withBase(audioMator.icon)}
                 alt={`${audioMator.name} app icon`}
                 class="home-project-icon"
               />
