@@ -354,6 +354,39 @@ a:not([class]) {
   box-shadow: 0 24px 48px rgba(29, 29, 31, 0.05);
 }
 
+.article-page-internet .article-hero {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.article-page-internet .article-cover-wrap {
+  max-width: 44rem;
+  margin: 0 auto 2rem;
+  border-radius: 0;
+  aspect-ratio: auto;
+  background: transparent;
+}
+
+.article-page-internet .article-shell {
+  margin-top: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 2.25rem 0 2.5rem;
+  box-shadow: none;
+}
+
+.article-page-internet .article-cover {
+  display: block;
+  height: auto;
+  width: 100%;
+  object-fit: contain;
+  transform: none;
+}
+
 .article-flow {
   display: grid;
   gap: 1.45rem;
@@ -693,6 +726,18 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
     margin-top: -1rem;
     padding: 1.6rem 1rem 2rem;
     border-radius: 1.4rem;
+  }
+
+  .article-page-internet .article-cover-wrap {
+    margin: 0 auto 1.5rem;
+    border-radius: 0;
+    aspect-ratio: auto;
+  }
+
+  .article-page-internet .article-shell {
+    margin-top: 0;
+    padding: 1.6rem 0 2rem;
+    border-radius: 0;
   }
 
   .article-flow > p:first-child::first-letter {
