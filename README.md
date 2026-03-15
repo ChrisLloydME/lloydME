@@ -1,6 +1,6 @@
 # Astro Personal Blog
 
-一个以内容为主的个人网站 + 博客系统骨架，基于 Astro、TypeScript、Markdown 和 Tailwind CSS，默认生成纯静态站点，适合部署到 GitHub Pages。
+一个以内容为主的个人网站 + 博客系统骨架，基于 Astro、TypeScript、Markdown 和 Tailwind CSS，默认生成纯静态站点，适合部署到 Cloudflare Pages。
 
 ## 技术栈
 
@@ -8,7 +8,7 @@
 - TypeScript
 - Markdown Content Collections
 - Tailwind CSS
-- 静态部署到 GitHub Pages
+- 静态部署到 Cloudflare Pages
 
 ## 本地开发
 
@@ -24,6 +24,12 @@ npm run dev
 ```bash
 npm run build
 npm run preview
+```
+
+如果要生成正确的站点绝对地址，可以在构建前设置 `SITE_URL`：
+
+```bash
+SITE_URL="https://example.com" npm run build
 ```
 
 ## 内容目录
@@ -51,19 +57,15 @@ featured: true
 - `/tags` 标签页
 - `/tags/[tag]` 单个标签归档页
 
-## 部署到 GitHub Pages
+## 部署到 Cloudflare Pages
 
-仓库已经包含 GitHub Actions 工作流 [`/.github/workflows/deploy.yml`](./.github/workflows/deploy.yml)，推送到 `main` 后会自动构建并发布到 GitHub Pages。
+在 Cloudflare Pages 中连接这个 GitHub 仓库后，使用以下设置：
 
-首次启用时需要在 GitHub 仓库里完成一次设置：
+1. `Framework preset`: `Astro`
+2. `Build command`: `npm run build`
+3. `Build output directory`: `dist`
+4. `Environment variable`: `SITE_URL=https://你的域名`
 
-1. 进入仓库 `Settings` -> `Pages`。
-2. 在 `Build and deployment` 里将 `Source` 设为 `GitHub Actions`。
-3. 确认仓库名与 Astro 配置中的 `base` 一致。
+如果你先使用 Cloudflare 提供的 `*.pages.dev` 域名，也可以先把 `SITE_URL` 设成对应地址，后续切换自定义域名时再更新。
 
-当前配置：
-
-- 站点域名：`https://chrislloydme.github.io`
-- 仓库路径基址：`/lloydME`
-
-如果你之后修改 GitHub 用户名、仓库名，或者改用自定义域名，需要同步更新 [`astro.config.mjs`](./astro.config.mjs) 里的 `site` 和 `base`。
+这个仓库已经移除了 GitHub Pages 的子路径配置，因此更适合直接部署在 Cloudflare 的根路径上。
