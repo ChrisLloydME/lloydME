@@ -33,7 +33,7 @@ const { tag, posts } = Astro.props as Props;
       <p class="section-kicker">Tag Archive</p>
       <h1 class="section-heading-sm mt-3">#{tag.label}</h1>
       <p class="section-copy mx-auto mt-6">
-        There are {posts.length} posts under this tag. Use tag pages to group a series, a topic archive, or a long-running theme.
+        Here you&apos;ll find {posts.length} post{posts.length === 1 ? "" : "s"} related to {tag.label}, all gathered in one place.
       </p>
     </div>
 
