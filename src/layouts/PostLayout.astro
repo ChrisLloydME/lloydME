@@ -11,7 +11,9 @@ interface Props {
 const { post } = Astro.props as Props;
 const postSlug = getPostSlug(post);
 const isBlueImmersive = post.data.pageTheme === "blue-immersive";
-const isInternetMagic = postSlug === "the-magic-of-internet";
+const isEditorialPlain =
+  postSlug === "the-magic-of-internet" ||
+  postSlug === "this-happens-once-every-few-lifetimes";
 ---
 
 <BaseLayout
@@ -28,7 +30,7 @@ const isInternetMagic = postSlug === "the-magic-of-internet";
     class:list={
       isBlueImmersive
         ? "article-page article-page-blue mx-auto max-w-none px-0 pb-0"
-        : ["mx-auto max-w-4xl px-4 pb-6 sm:px-6", isInternetMagic && "article-page-internet"]
+        : ["mx-auto max-w-4xl px-4 pb-6 sm:px-6", isEditorialPlain && "article-page-internet"]
     }
     data-post-slug={postSlug}
   >
