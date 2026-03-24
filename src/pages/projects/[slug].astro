@@ -54,7 +54,7 @@ const projectMeta = [project.category, ...project.tags].join(" · ");
     <section class="mx-auto max-w-6xl px-4 py-16 sm:px-10 sm:py-24">
       <div class="grid gap-5 md:grid-cols-3">
         {project.capabilities.map((capability, index) => (
-          <section class="rounded-[2rem] border border-[var(--line)] bg-white p-6 shadow-[0_20px_80px_rgba(29,29,31,0.05)] sm:p-8">
+          <section class="project-capability-card rounded-[2rem] border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[var(--card-shadow)] sm:p-8">
             <p class="text-sm font-semibold tracking-[0.04em] text-[var(--accent)]">
               0{index + 1}
             </p>
@@ -68,7 +68,7 @@ const projectMeta = [project.category, ...project.tags].join(" · ");
     </section>
 
     <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-10 sm:pb-28">
-      <div class="rounded-[2rem] bg-[var(--ink)] px-5 py-10 text-center text-white shadow-[0_30px_120px_rgba(29,29,31,0.16)] sm:rounded-[2.5rem] sm:px-12 sm:py-20">
+      <div class="project-privacy-banner rounded-[2rem] bg-[var(--contrast-surface)] px-5 py-10 text-center text-white shadow-[var(--contrast-surface-shadow)] sm:rounded-[2.5rem] sm:px-12 sm:py-20">
         <p class="text-sm font-semibold tracking-[0.04em] text-white/55">PRIVACY / VALUE</p>
         <h2 class="mt-4 font-[family:var(--font-title)] text-[clamp(2.1rem,11vw,4.8rem)] font-semibold leading-[1.02] tracking-[-0.02em]">
           Local by design.
