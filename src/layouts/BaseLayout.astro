@@ -45,7 +45,7 @@ const pageDescription = description && description.trim().length > 0 ? descripti
   <body class:list={[bodyClass]}>
     <div class="relative min-h-screen">
       <Navbar />
-      <main class:list={[fullBleed ? "pb-20" : "px-4 pb-20 sm:px-6", mainClass]}>
+      <main class:list={[fullBleed ? "pb-16 sm:pb-20" : "px-4 pb-16 sm:px-6 sm:pb-20", mainClass]}>
         <div class:list={[!fullBleed && "mx-auto max-w-[1120px]", contentClass]}>
           <slot />
         </div>

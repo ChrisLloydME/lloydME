@@ -9,7 +9,7 @@ interface Props {
 const { project } = Astro.props as Props;
 ---
 
-<article class="group rounded-[2rem] border border-[var(--line)] bg-white p-7 shadow-[0_18px_60px_rgba(29,29,31,0.05)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_28px_90px_rgba(29,29,31,0.1)]">
+<article class="group rounded-[2rem] border border-[var(--line)] bg-white p-5 shadow-[0_18px_60px_rgba(29,29,31,0.05)] transition duration-200 hover:-translate-y-1 hover:shadow-[0_28px_90px_rgba(29,29,31,0.1)] sm:p-7">
   <a class="block" href={withBase(`/projects/${project.slug}/`)}>
     <div class="flex flex-col gap-6 sm:flex-row sm:items-start">
         <img
@@ -20,13 +20,13 @@ const { project } = Astro.props as Props;
 
         <div class="max-w-3xl">
           <p class="text-sm font-semibold tracking-[-0.01em] text-[var(--accent)]">{project.category}</p>
-          <h2 class="mt-3 font-[family:var(--font-title)] text-3xl font-semibold tracking-[-0.015em] text-[var(--ink)]">
+          <h2 class="mt-3 font-[family:var(--font-title)] text-[1.85rem] font-semibold leading-tight tracking-[-0.015em] text-[var(--ink)] sm:text-3xl">
             {project.name}
           </h2>
-          <p class="mt-4 font-[family:var(--font-title)] text-xl font-semibold leading-8 tracking-[-0.01em] text-[var(--ink)]">
+          <p class="mt-4 font-[family:var(--font-title)] text-lg font-semibold leading-7 tracking-[-0.01em] text-[var(--ink)] sm:text-xl sm:leading-8">
             {project.headline}
           </p>
-          <p class="mt-4 leading-8 text-[var(--muted)]">{project.summary}</p>
+          <p class="mt-4 leading-7 text-[var(--muted)] sm:leading-8">{project.summary}</p>
 
           <div class="mt-5 flex flex-wrap gap-2">
             {project.tags.map((item) => (

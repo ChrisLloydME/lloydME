@@ -29,6 +29,7 @@ body {
   color: var(--ink);
   font-family: var(--font-sans);
   background-color: var(--bg);
+  overflow-x: hidden;
   background-image:
     radial-gradient(120% 32rem at 50% -6rem, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 62%),
     linear-gradient(180deg, #ffffff 0%, var(--bg-strong) 18%, var(--bg) 52%, var(--bg) 100%);
@@ -638,6 +639,34 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
 }
 
 @media (max-width: 640px) {
+  .section-kicker {
+    padding: 0.4rem 0.72rem;
+    font-size: 0.8rem;
+  }
+
+  .section-heading {
+    font-size: clamp(2.35rem, 11vw, 3.6rem);
+    line-height: 1;
+  }
+
+  .section-heading-sm {
+    font-size: clamp(1.95rem, 9vw, 3rem);
+    line-height: 1.04;
+  }
+
+  .section-copy {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .link-action {
+    font-size: 0.96rem;
+  }
+
+  .section-rail {
+    padding-top: 2rem;
+  }
+
   .home-feature-stack {
     gap: 0;
   }
@@ -673,8 +702,14 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
   }
 
   .home-feature-copy {
+    align-items: flex-start;
     justify-content: flex-start;
     padding: 1.1rem 1rem 1.2rem;
+  }
+
+  .home-feature-kicker {
+    padding: 0.45rem 0.82rem;
+    font-size: 0.86rem;
   }
 
   .home-project-copy {
@@ -694,13 +729,14 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
   .home-project-summary {
     max-width: none;
     font-size: 1rem;
+    line-height: 1.6;
   }
 
   .article-page-blue .article-hero-copy-blue {
     position: absolute;
     bottom: 1rem;
     left: 50%;
-    width: min(100vw - 1rem, 34rem);
+    width: min(calc(100vw - 1.5rem), 34rem);
     margin: 0;
     padding: 0 0.75rem;
     transform: translateX(-50%);
@@ -711,9 +747,14 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
   }
 
   .article-page-blue .article-shell-blue {
-    width: min(44rem, calc(100vw - 1rem));
+    width: min(44rem, calc(100vw - 1.5rem));
     margin-top: -2.5rem;
     padding-bottom: 2rem;
+  }
+
+  .article-title {
+    font-size: clamp(2.2rem, 11vw, 3.4rem);
+    line-height: 1;
   }
 
   .article-cover-wrap {
@@ -743,6 +784,24 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
   .article-flow > p:first-child::first-letter {
     margin-right: 0.45rem;
     font-size: 3.5rem;
+  }
+
+  .article-flow {
+    gap: 1.2rem;
+    font-size: 1.03rem;
+    line-height: 1.82;
+  }
+
+  .article-flow h2 {
+    font-size: 1.5rem;
+  }
+
+  .article-flow h3 {
+    font-size: 1.2rem;
+  }
+
+  .article-flow blockquote {
+    padding-left: 0.85rem;
   }
 }
 
