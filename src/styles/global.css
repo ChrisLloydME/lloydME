@@ -513,6 +513,10 @@ body.theme-blue-immersive footer .border-t {
   border-color: rgba(255, 255, 255, 0.18);
 }
 
+body.theme-blue-immersive footer .text-\[var\(--muted\)\] {
+  color: rgba(255, 255, 255, 0.84);
+}
+
 body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
   color: #ffffff;
 }
