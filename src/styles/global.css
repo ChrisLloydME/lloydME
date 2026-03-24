@@ -859,22 +859,60 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
 
   .article-page-blue .article-hero-copy-blue {
     position: absolute;
-    bottom: 1rem;
+    bottom: 1.5rem;
     left: 50%;
-    width: min(calc(100vw - 1.5rem), 34rem);
+    width: min(calc(100vw - 2rem), 28rem);
     margin: 0;
-    padding: 0 0.75rem;
+    padding: 0 0.9rem;
     transform: translateX(-50%);
   }
 
   .article-page-blue .article-cover-wrap-blue {
-    margin-bottom: 0.25rem;
+    margin-bottom: 0;
+    aspect-ratio: 4 / 5.15;
+  }
+
+  .article-page-blue .article-cover-blue {
+    object-position: center 28%;
   }
 
   .article-page-blue .article-shell-blue {
-    width: min(44rem, calc(100vw - 1.5rem));
-    margin-top: -2.5rem;
-    padding-bottom: 2rem;
+    width: min(42rem, calc(100vw - 2rem));
+    margin-top: -4.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 2.25rem;
+  }
+
+  .article-page-blue .article-title {
+    width: max-content;
+    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: clamp(1.6rem, 6.6vw, 2.15rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    white-space: nowrap;
+    text-wrap: nowrap;
+  }
+
+  .article-page-blue .article-meta-chip {
+    padding: 0.5rem 0.82rem;
+  }
+
+  .article-page-blue .article-tag {
+    font-size: 0.92rem;
+  }
+
+  .article-page-blue .article-flow {
+    max-width: min(34rem, calc(100vw - 2.5rem));
+    gap: 1.35rem;
+    font-size: 1.02rem;
+    line-height: 1.86;
+  }
+
+  .article-page-blue .article-flow > p:first-child::first-letter {
+    font-size: 3.1rem;
+    margin-top: 0.06rem;
   }
 
   .article-title {
