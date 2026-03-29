@@ -1,71 +1,116 @@
-# Astro Personal Blog
+# lloydME
 
-一个以内容为主的个人网站 + 博客系统骨架，基于 Astro、TypeScript、Markdown 和 Tailwind CSS，默认生成纯静态站点，适合部署到 Cloudflare Pages。
+Personal website and blog built with Astro, TypeScript, Markdown content collections, and Tailwind CSS v4.
 
-## 技术栈
+The site is statically generated and includes:
 
-- Astro
+- a homepage with featured blog and project sections
+- a blog index and individual post pages
+- tag archive pages
+- an about page
+- a projects index and project detail pages
+
+## Tech Stack
+
+- Astro 5/6
 - TypeScript
-- Markdown Content Collections
-- Tailwind CSS
-- 静态部署到 Cloudflare Pages
+- Astro Content Collections
+- Markdown
+- Tailwind CSS v4
 
-## 本地开发
+## Requirements
+
+- Node.js `>= 22.12.0`
+- npm
+
+## Development
 
 ```bash
 npm install
 npm run dev
 ```
 
-默认开发地址通常为 `http://localhost:4321`。
+The local dev server usually runs at [http://localhost:4321](http://localhost:4321).
 
-## 构建
+## Build
 
 ```bash
 npm run build
 npm run preview
 ```
 
-如果要生成正确的站点绝对地址，可以在构建前设置 `SITE_URL`：
+If you want correct canonical URLs and absolute site metadata during build, set `SITE_URL` first:
 
 ```bash
 SITE_URL="https://example.com" npm run build
 ```
 
-## 内容目录
+## Project Structure
 
-博客文章位于 `src/content/blog`，每篇文章使用 frontmatter 管理元数据，例如：
+```text
+src/
+  assets/          Images used by pages and content
+  components/      Reusable Astro components
+  content/blog/    Markdown blog posts
+  data/            Structured data for projects
+  layouts/         Shared page layouts
+  pages/           Route entry files
+  styles/          Global styles
+  utils/           Path and blog helpers
+```
+
+## Blog Content
+
+Blog posts live in `src/content/blog` and use frontmatter like this:
 
 ```md
 ---
-title: 示例文章
+title: Example Post
 date: 2026-03-14
-description: 文章摘要
+description: Short summary
 tags: [blog, example]
 draft: false
 featured: true
+updatedDate: 2026-03-20
+heroImage: ./cover.jpg
+cardImage: ./card.jpg
+heroImageAlt: Cover description
+pageTheme: blue-immersive
 ---
 ```
 
-## 页面结构
+Current schema fields:
 
-- `/` 首页
-- `/blog` 博客列表
-- `/blog/[slug]` 文章详情
-- `/about` About 页面
-- `/projects` Projects 页面
-- `/tags` 标签页
-- `/tags/[tag]` 单个标签归档页
+- `title`
+- `date`
+- `description`
+- `tags`
+- `draft`
+- `featured`
+- `updatedDate`
+- `heroImage`
+- `cardImage`
+- `heroImageAlt`
+- `pageTheme`
 
-## 部署到 Cloudflare Pages
+## Routes
 
-在 Cloudflare Pages 中连接这个 GitHub 仓库后，使用以下设置：
+- `/`
+- `/blog`
+- `/blog/[slug]`
+- `/tags`
+- `/tags/[tag]`
+- `/about`
+- `/projects`
+- `/projects/[slug]`
 
-1. `Framework preset`: `Astro`
-2. `Build command`: `npm run build`
-3. `Build output directory`: `dist`
-4. `Environment variable`: `SITE_URL=https://你的域名`
+## Deployment
 
-如果你先使用 Cloudflare 提供的 `*.pages.dev` 域名，也可以先把 `SITE_URL` 设成对应地址，后续切换自定义域名时再更新。
+This project is a good fit for Cloudflare Pages or any static hosting platform that serves the generated `dist/` directory.
 
-这个仓库已经移除了 GitHub Pages 的子路径配置，因此更适合直接部署在 Cloudflare 的根路径上。
+For Cloudflare Pages, use:
+
+1. Framework preset: `Astro`
+2. Build command: `npm run build`
+3. Build output directory: `dist`
+4. Environment variable: `SITE_URL=https://your-domain.com`
