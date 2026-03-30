@@ -440,6 +440,24 @@ a:not([class]) {
   color: inherit;
 }
 
+.has-caption-intro .article-flow > p:first-child {
+  max-width: 36rem;
+  margin: 0 auto 0.35rem;
+  padding: 0.85rem 1rem 0.95rem;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: var(--muted);
+}
+
+.has-caption-intro .article-flow > p:first-child em {
+  font-style: normal;
+}
+
 .article-flow h2,
 .article-flow h3,
 .article-flow h4 {
@@ -1092,6 +1110,13 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
   .article-flow > p:first-child::first-letter {
     margin-right: 0.45rem;
     font-size: 3.5rem;
+  }
+
+  .has-caption-intro .article-flow > p:first-child {
+    max-width: min(100%, 32rem);
+    padding: 0.75rem 0.8rem 0.85rem;
+    font-size: 0.86rem;
+    line-height: 1.58;
   }
 
   .article-flow {

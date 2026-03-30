@@ -14,6 +14,8 @@ const blog = defineCollection({
       tags: z.array(z.string()).default([]),
       draft: z.boolean().default(false),
       featured: z.boolean().default(false),
+      disableDropCap: z.boolean().default(false),
+      introStyle: z.enum(["caption"]).optional(),
       updatedDate: z.coerce.date().optional(),
       heroImage: image().optional(),
       cardImage: image().optional(),

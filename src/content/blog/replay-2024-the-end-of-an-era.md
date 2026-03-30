@@ -7,6 +7,7 @@ tags:
   - Annual Replay
 draft: false
 featured: false
+disableDropCap: true
 ---
 
 2024，
