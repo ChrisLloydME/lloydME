@@ -27,7 +27,14 @@ export function getPostSlug(post: BlogPost) {
 }
 
 export function tagToSlug(tag: string) {
-  return encodeURIComponent(tag.trim().toLowerCase().replace(/\s+/g, "-"));
+  return tag
+    .trim()
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\p{L}\p{N}]+/gu, "-")
+    .replace(/^-+|-+$/g, "")
+    .replace(/-{2,}/g, "-");
 }
 
 export function getAllTags(posts: BlogPost[]): TagSummary[] {
