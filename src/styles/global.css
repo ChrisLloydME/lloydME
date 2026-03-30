@@ -1059,7 +1059,7 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
   }
 
   .article-title {
-    font-size: clamp(2.2rem, 11vw, 3.4rem);
+    font-size: clamp(1.5rem, 8.5vw, 2rem);
     line-height: 1;
   }
 
@@ -1076,7 +1076,9 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
   }
 
   .article-page-internet .article-cover-wrap {
-    margin: 0 auto 1.5rem;
+    width: 100vw;
+    max-width: none;
+    margin: 0 calc(50% - 50vw) 1.5rem;
     border-radius: 0;
     aspect-ratio: auto;
   }
