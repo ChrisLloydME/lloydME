@@ -11,6 +11,7 @@ interface Props {
 const { post } = Astro.props as Props;
 const postSlug = getPostSlug(post);
 const isBlueImmersive = post.data.pageTheme === "blue-immersive";
+const disableDropCap = postSlug === "replay-2024-the-end-of-an-era";
 ---
 
 <BaseLayout
@@ -26,8 +27,14 @@ const isBlueImmersive = post.data.pageTheme === "blue-immersive";
   <article
     class:list={
       isBlueImmersive
-        ? "article-page article-page-blue mx-auto max-w-none px-0 pb-0"
-        : "article-page-internet mx-auto max-w-4xl px-4 pb-6 sm:px-6"
+        ? [
+            "article-page article-page-blue mx-auto max-w-none px-0 pb-0",
+            disableDropCap && "no-dropcap",
+          ]
+        : [
+            "article-page-internet mx-auto max-w-4xl px-4 pb-6 sm:px-6",
+            disableDropCap && "no-dropcap",
+          ]
     }
     data-post-slug={postSlug}
   >

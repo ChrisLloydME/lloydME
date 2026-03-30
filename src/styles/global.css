@@ -430,6 +430,16 @@ a:not([class]) {
   color: var(--ink);
 }
 
+.no-dropcap .article-flow > p:first-child::first-letter {
+  float: none;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
 .article-flow h2,
 .article-flow h3,
 .article-flow h4 {
