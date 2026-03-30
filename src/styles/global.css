@@ -731,6 +731,11 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
       #1d2430;
   }
 
+  body:not(.theme-blue-immersive) .article-page-internet .article-hero,
+  body:not(.theme-blue-immersive) .article-page-internet .article-cover-wrap {
+    background: transparent;
+  }
+
   body:not(.theme-blue-immersive) .article-meta-chip {
     background: rgba(20, 25, 34, 0.84);
   }
@@ -741,10 +746,6 @@ body.theme-blue-immersive footer .text-\[var\(--ink\)\] {
 
   body:not(.theme-blue-immersive) .article-tag:hover {
     border-color: rgba(122, 182, 255, 0.26);
-  }
-
-  body:not(.theme-blue-immersive) .article-shell {
-    background: rgba(14, 18, 25, 0.9);
   }
 
   body:not(.theme-blue-immersive) .article-flow blockquote {
