@@ -73,18 +73,11 @@ const audioMator = projects.find((project) => project.slug === "audiomator");
         return;
       }
 
-      const desktopQuery = window.matchMedia("(min-width: 901px)");
       let frame = 0;
 
       const syncProjectCardHeight = () => {
         cancelAnimationFrame(frame);
         frame = requestAnimationFrame(() => {
-          if (!desktopQuery.matches) {
-            secondaryCard.style.removeProperty("height");
-            secondaryCard.style.removeProperty("min-height");
-            return;
-          }
-
           const primaryHeight = Math.ceil(primaryCard.getBoundingClientRect().height);
           secondaryCard.style.height = `${primaryHeight}px`;
           secondaryCard.style.minHeight = `${primaryHeight}px`;
@@ -100,13 +93,8 @@ const audioMator = projects.find((project) => project.slug === "audiomator");
         window.addEventListener("resize", syncProjectCardHeight);
       }
 
-      if (typeof desktopQuery.addEventListener === "function") {
-        desktopQuery.addEventListener("change", syncProjectCardHeight);
-      } else if (typeof desktopQuery.addListener === "function") {
-        desktopQuery.addListener(syncProjectCardHeight);
-      }
-
       window.addEventListener("load", syncProjectCardHeight, { once: true });
+      window.addEventListener("resize", syncProjectCardHeight);
     })();
   </script>
 </BaseLayout>
