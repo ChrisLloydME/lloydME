@@ -1,0 +1,1056 @@
+---
+import audiomatorMainWindow from "../../assets/projects/audiomator-main-window.png";
+import type { Project } from "../../data/projects";
+import { withBase } from "../../utils/paths";
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props as Props;
+const [repoLink] = project.links;
+const formatFact = project.facts.find((fact) => fact.value.includes("formats"));
+const heroMeta = project.tags.join(" / ");
+
+const heroSummary =
+  "A local-first desktop editor for cleaning audio metadata with precision.";
+
+const detailParagraph =
+  "AudioMator is built for people who still keep real audio files on disk and occasionally need to fix them by hand. Instead of hiding everything behind a batch wizard, it keeps the sidebar, the file list, and the inspector visible together. That makes it easier to compare tracks, spot inconsistencies, and save changes with confidence.";
+
+const workflow = [
+  {
+    pane: "Sidebar",
+    title: "Choose the source you want to work on.",
+    summary:
+      "Use Current Session for one-off cleanup, or keep watched folders pinned for libraries you revisit often.",
+    points: [
+      "Temporary sessions for quick edits",
+      "Persistent watched folders across launches",
+    ],
+  },
+  {
+    pane: "File List",
+    title: "Review the set before you edit anything.",
+    summary:
+      "The middle table is where you sort tracks, compare rows, reorder files, and decide what needs attention.",
+    points: [
+      "Sortable columns and multi-select",
+      "Visible order can drive track renumbering",
+    ],
+  },
+  {
+    pane: "Inspector",
+    title: "Edit fields with context still in view.",
+    summary:
+      "The inspector handles single-file edits, mixed selections, artwork changes, and raw metadata review without hiding the library around it.",
+    points: [
+      "Field editing, artwork, and technical details",
+      "Raw tag inspection before save",
+    ],
+  },
+];
+
+const capabilitySections = [
+  {
+    index: "01",
+    title: "Edit metadata deliberately",
+    summary:
+      "AudioMator focuses on exact edits rather than automation guesses, so common library fixes stay readable.",
+    points: [
+      "Single-file and shared multi-file editing",
+      "Mixed-value placeholders where selections differ",
+      "Write feedback for success, warning, partial-save, and failure states",
+    ],
+  },
+  {
+    index: "02",
+    title: "Inspect before you write",
+    summary:
+      "The app gives you enough evidence to confirm what is actually stored in a file before committing changes.",
+    points: [
+      "Tag Inspector output from TagLib and AVFoundation",
+      "Technical fields like duration, bitrate, sample rate, and format",
+      "Artwork, IDs, and additional metadata when present",
+    ],
+  },
+  {
+    index: "03",
+    title: "Handle repetitive cleanup in batches",
+    summary:
+      "When a whole folder needs the same kind of housekeeping, the utility tools stay close to the main workflow.",
+    points: [
+      "Renumber tracks from the current visible order",
+      "Rename files from metadata tokens while preserving extensions",
+      "Reveal in Finder, copy paths, and erase supported tags",
+    ],
+  },
+  {
+    index: "04",
+    title: "Use MusicBrainz only as reference",
+    summary:
+      "MusicBrainz is there when you need outside context, but it does not change the app’s local-first editing model.",
+    points: [
+      "Open a dedicated browser window when needed",
+      "Seed searches from the current file selection",
+      "Keep actual edits inside AudioMator on your Mac",
+    ],
+  },
+];
+
+const foundationStack = [
+  {
+    name: "SwiftUI",
+    description:
+      "Drives the native macOS interface, including the three-pane layout, sheets, toolbar commands, and inspector behavior.",
+  },
+  {
+    name: "TagLib Bridge",
+    description:
+      "Handles local metadata reading and writing through the app’s bundled bridge layer.",
+  },
+  {
+    name: "AVFoundation",
+    description:
+      "Adds format-aware inspection and technical metadata alongside the write path.",
+  },
+];
+
+const statItems = [
+  {
+    value: "3 panes",
+    label: "Sidebar, file list, and inspector visible together.",
+  },
+  {
+    value: "14 fields",
+    label: "Core metadata fields plus artwork editing in the current build.",
+  },
+  {
+    value: "23 formats",
+    label: "Import and inspection support across common local audio containers.",
+  },
+  {
+    value: "Batch tools",
+    label: "Renumbering, file rename, Finder reveal, and tag cleanup utilities.",
+  },
+];
+---
+
+<article class="audiomator-page">
+  <section class="audiomator-hero">
+    <div class="audiomator-shell">
+      <div class="audiomator-hero-top reveal">
+        <p class="audiomator-meta-line">{heroMeta}</p>
+        <div class="audiomator-mark" aria-hidden="true">
+          <span class="audiomator-mark-square"></span>
+          <span class="audiomator-mark-rule"></span>
+        </div>
+        <h1 class="audiomator-title">{project.name}</h1>
+        <p class="audiomator-subtitle">The best mate of your audio library.</p>
+        <p class="audiomator-summary">{heroSummary}</p>
+
+        <div class="audiomator-actions">
+          {
+            repoLink && (
+              <a
+                class="audiomator-button audiomator-button-primary"
+                href={repoLink.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                View Repository <span aria-hidden="true">→</span>
+              </a>
+            )
+          }
+        </div>
+      </div>
+
+      <figure class="audiomator-hero-figure reveal">
+        <img
+          src={audiomatorMainWindow.src}
+          alt="AudioMator main window showing the sidebar, track list, artwork panel, and metadata inspector."
+          class="audiomator-hero-image"
+        />
+        <figcaption class="audiomator-caption-row">
+          <span>Main window</span>
+          <span>Session source, track table, and inspector in one view</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="audiomator-stats reveal">
+    <div class="audiomator-shell">
+      <div class="audiomator-stats-grid">
+        {statItems.map((fact) => (
+          <article class="audiomator-stat">
+            <p class="audiomator-stat-value">{fact.value}</p>
+            <p class="audiomator-stat-copy">{fact.label}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="audiomator-section reveal">
+    <div class="audiomator-shell">
+      <div class="audiomator-section-head">
+        <p class="audiomator-section-label">Product Detail</p>
+        <h2 class="audiomator-section-title">Desktop metadata cleanup without the usual ambiguity.</h2>
+      </div>
+
+      <div class="audiomator-detail-grid">
+        <p class="audiomator-detail-copy">
+          <span class="audiomator-dropcap">{detailParagraph.charAt(0)}</span>{detailParagraph.slice(1)}
+        </p>
+
+        <aside class="audiomator-detail-note">
+          <p class="audiomator-note-label">Local-first principle</p>
+          <p>
+            AudioMator does not require an account, does not upload your library, and does not turn
+            metadata cleanup into a cloud workflow.
+          </p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="audiomator-section audiomator-section-diagonal reveal">
+    <div class="audiomator-shell">
+      <div class="audiomator-section-head">
+        <p class="audiomator-section-label">Workflow</p>
+        <h2 class="audiomator-section-title">The interface is organized around the three decisions you make over and over.</h2>
+      </div>
+
+      <div class="audiomator-workflow-list">
+        {workflow.map((step, index) => (
+          <article class="audiomator-workflow-step">
+            <div class="audiomator-workflow-rail">
+              <p class="audiomator-workflow-stepno">0{index + 1}</p>
+              <p class="audiomator-workflow-pane">{step.pane}</p>
+            </div>
+
+            <div class="audiomator-workflow-text">
+              <h3>{step.title}</h3>
+              <p>{step.summary}</p>
+
+              <ul class="audiomator-workflow-points">
+                {step.points.map((point) => <li>{point}</li>)}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="audiomator-section reveal">
+    <div class="audiomator-shell">
+      <div class="audiomator-section-head">
+        <p class="audiomator-section-label">Capabilities</p>
+        <h2 class="audiomator-section-title">A compact toolset aimed at the parts of metadata work that usually get tedious.</h2>
+      </div>
+
+      <div class="audiomator-capability-list">
+        {capabilitySections.map((capability) => (
+          <article class="audiomator-capability">
+            <div class="audiomator-capability-head">
+              <p class="audiomator-capability-index">{capability.index}</p>
+              <h3>{capability.title}</h3>
+            </div>
+
+            <p class="audiomator-capability-summary">{capability.summary}</p>
+
+            <ul class="audiomator-capability-points">
+              {capability.points.map((detail) => <li>{detail}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="audiomator-section audiomator-section-grid reveal">
+    <div class="audiomator-shell">
+      <div class="audiomator-section-head">
+        <p class="audiomator-section-label">Foundation</p>
+        <h2 class="audiomator-section-title">Native macOS tooling underneath, practical format coverage on top.</h2>
+      </div>
+
+      <div class="audiomator-foundation-grid">
+        <div class="audiomator-foundation-column">
+          <p class="audiomator-note-label">Stack</p>
+          <div class="audiomator-stack-list">
+            {foundationStack.map((item) => (
+              <article class="audiomator-stack-row">
+                <h3>{item.name}</h3>
+                <p>{item.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div class="audiomator-foundation-column audiomator-format-column">
+          <p class="audiomator-note-label">Formats</p>
+          <p class="audiomator-format-value">{formatFact?.value ?? "23 formats"}</p>
+          <p class="audiomator-format-copy">
+            Format support is aimed at practical library maintenance: inspect widely, edit the common
+            formats that people actually keep and tag by hand.
+          </p>
+          <div class="audiomator-format-list">
+            {project.formatHighlights.map((format) => <span>{format}</span>)}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="audiomator-cta reveal">
+    <div class="audiomator-shell">
+      <div class="audiomator-cta-inner">
+        <p class="audiomator-note-label audiomator-note-label-inverse">Final Note</p>
+        <blockquote class="audiomator-cta-quote">“Files stay on your Mac.”</blockquote>
+        <p class="audiomator-cta-copy">
+          AudioMator keeps the core workflow local: choose files, inspect what is there, make the
+          edits you intend, and write them back on your own machine.
+        </p>
+
+        <div class="audiomator-actions">
+          {
+            repoLink && (
+              <a
+                class="audiomator-button audiomator-button-inverse"
+                href={repoLink.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                View Repository <span aria-hidden="true">→</span>
+              </a>
+            )
+          }
+          <a class="audiomator-button audiomator-button-ghost" href={withBase("/projects/")}>
+            Back to Projects
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</article>
+
+<style>
+  .audiomator-page {
+    --am-bg: #ffffff;
+    --am-fg: #000000;
+    --am-muted: #525252;
+    --am-muted-surface: #f5f5f5;
+    --am-border: #000000;
+    --am-border-light: #e5e5e5;
+    --am-page-bg-start: #ffffff;
+    --am-page-bg-end: #fbfbfb;
+    --am-hero-bg-start: #ffffff;
+    --am-hero-bg-end: #fafafa;
+    --am-hero-line: rgba(0, 0, 0, 0.015);
+    --am-noise-opacity: 0.02;
+    --am-inverse-line: rgba(255, 255, 255, 0.03);
+    --am-inverse-grid: rgba(255, 255, 255, 0.18);
+    --am-inverse-copy: rgba(255, 255, 255, 0.72);
+    --am-diagonal-line: rgba(0, 0, 0, 0.02);
+    --am-grid-line: rgba(0, 0, 0, 0.03);
+    --am-hover-muted: rgba(255, 255, 255, 0.8);
+    --am-cta-glow: rgba(255, 255, 255, 0.06);
+    --am-cta-muted: rgba(255, 255, 255, 0.72);
+    --am-cta-copy-muted: rgba(255, 255, 255, 0.78);
+    --am-display: "Playfair Display", Georgia, serif;
+    --am-body: "Source Serif 4", Georgia, serif;
+    --am-mono: "JetBrains Mono", monospace;
+    color: var(--am-fg);
+    background: linear-gradient(180deg, var(--am-page-bg-start) 0%, var(--am-page-bg-end) 100%);
+    font-family: var(--am-body);
+    color-scheme: light;
+  }
+
+  .audiomator-page,
+  .audiomator-page * {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .audiomator-hero,
+  .audiomator-stats,
+  .audiomator-section,
+  .audiomator-cta {
+    width: 100%;
+  }
+
+  .audiomator-shell {
+    width: min(72rem, calc(100% - 3rem));
+    margin: 0 auto;
+  }
+
+  .audiomator-hero {
+    position: relative;
+    padding: clamp(3.5rem, 8vw, 6rem) 0 clamp(2.5rem, 6vw, 4rem);
+    background: linear-gradient(180deg, var(--am-hero-bg-start) 0%, var(--am-hero-bg-end) 100%);
+    border-bottom: 4px solid var(--am-border);
+  }
+
+  .audiomator-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 1px,
+      var(--am-hero-line) 1px,
+      var(--am-hero-line) 2px
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+  }
+
+  .audiomator-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: var(--am-noise-opacity);
+    pointer-events: none;
+  }
+
+  .audiomator-hero-top,
+  .audiomator-hero-figure,
+  .audiomator-stats-grid,
+  .audiomator-section-head,
+  .audiomator-detail-grid,
+  .audiomator-workflow-list,
+  .audiomator-capability-list,
+  .audiomator-foundation-grid,
+  .audiomator-cta-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .audiomator-meta-line,
+  .audiomator-section-label,
+  .audiomator-note-label,
+  .audiomator-workflow-index,
+  .audiomator-capability-index,
+  .audiomator-caption-row,
+  .audiomator-note-label-inverse {
+    font-family: var(--am-mono);
+    font-size: 0.76rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .audiomator-meta-line {
+    margin: 0;
+    color: var(--am-muted);
+  }
+
+  .audiomator-mark {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 1.4rem;
+  }
+
+  .audiomator-mark-square {
+    width: 0.95rem;
+    height: 0.95rem;
+    border: 2px solid var(--am-border);
+    flex: 0 0 auto;
+  }
+
+  .audiomator-mark-rule {
+    width: min(16rem, 38vw);
+    height: 4px;
+    background: var(--am-border);
+  }
+
+  .audiomator-title {
+    margin: 1.4rem 0 0;
+    font-family: var(--am-display);
+    font-size: clamp(4.5rem, 14vw, 8.5rem);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    text-wrap: balance;
+  }
+
+  .audiomator-subtitle {
+    max-width: 32rem;
+    margin: 1.45rem 0 0;
+    font-family: var(--am-display);
+    font-size: clamp(1.45rem, 3vw, 2rem);
+    font-weight: 500;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+
+  .audiomator-summary,
+  .audiomator-detail-copy,
+  .audiomator-detail-note p,
+  .audiomator-workflow-text p:last-child,
+  .audiomator-capability-summary,
+  .audiomator-capability-points,
+  .audiomator-stack-row p,
+  .audiomator-format-copy,
+  .audiomator-cta-copy {
+    font-size: clamp(1.03rem, 0.8vw + 0.92rem, 1.16rem);
+    line-height: 1.72;
+    color: var(--am-muted);
+  }
+
+  .audiomator-summary {
+    max-width: 34rem;
+    margin: 1.35rem 0 0;
+  }
+
+  .audiomator-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
+
+  .audiomator-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0.8rem 1.1rem;
+    border: 2px solid var(--am-border);
+    font-family: var(--am-mono);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition:
+      background-color 100ms linear,
+      color 100ms linear,
+      border-color 100ms linear;
+  }
+
+  .audiomator-button:focus-visible {
+    outline: 3px solid var(--am-fg);
+    outline-offset: 3px;
+  }
+
+  .audiomator-button-inverse:focus-visible,
+  .audiomator-button-ghost:focus-visible {
+    outline-color: var(--am-bg);
+  }
+
+  .audiomator-button-primary {
+    background: var(--am-fg);
+    color: var(--am-bg);
+  }
+
+  .audiomator-button-primary:hover {
+    background: var(--am-bg);
+    color: var(--am-fg);
+  }
+
+  .audiomator-button-inverse {
+    background: var(--am-bg);
+    color: var(--am-fg);
+    border-color: var(--am-bg);
+  }
+
+  .audiomator-button-inverse:hover {
+    background: transparent;
+    color: var(--am-bg);
+  }
+
+  .audiomator-button-ghost {
+    border-color: transparent;
+    background: transparent;
+    color: var(--am-bg);
+    text-decoration: underline;
+    text-underline-offset: 0.28em;
+  }
+
+  .audiomator-button-ghost:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  .audiomator-hero-figure {
+    margin: 3rem 0 0;
+  }
+
+  .audiomator-hero-image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .audiomator-caption-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.8rem;
+    padding: 1.25rem 0 0;
+    color: var(--am-muted);
+  }
+
+  .audiomator-stats {
+    position: relative;
+    padding: 2.5rem 0;
+    background: var(--am-fg);
+    color: var(--am-bg);
+    border-bottom: 4px solid var(--am-border);
+  }
+
+  .audiomator-stats::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 1px,
+      var(--am-inverse-line) 1px,
+      var(--am-inverse-line) 2px
+    );
+    background-size: 4px 100%;
+    pointer-events: none;
+  }
+
+  .audiomator-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--am-inverse-grid);
+  }
+
+  .audiomator-stat {
+    padding: 1.4rem 1.2rem 1.55rem;
+    background: var(--am-fg);
+  }
+
+  .audiomator-stat-value {
+    margin: 0;
+    font-family: var(--am-display);
+    font-size: clamp(1.6rem, 2vw, 2rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--am-bg);
+  }
+
+  .audiomator-stat-copy {
+    margin: 0.95rem 0 0;
+    line-height: 1.55;
+    color: var(--am-inverse-copy);
+  }
+
+  .audiomator-section {
+    padding: clamp(4rem, 8vw, 6rem) 0 0;
+    border-top: 4px solid var(--am-border);
+  }
+
+  .audiomator-section-diagonal,
+  .audiomator-section-grid {
+    position: relative;
+  }
+
+  .audiomator-section-diagonal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      var(--am-diagonal-line) 40px,
+      var(--am-diagonal-line) 42px
+    );
+    pointer-events: none;
+  }
+
+  .audiomator-section-grid::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--am-grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--am-grid-line) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .audiomator-section-head {
+    max-width: 40rem;
+  }
+
+  .audiomator-section-title {
+    margin: 1rem 0 0;
+    font-family: var(--am-display);
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+  }
+
+  .audiomator-detail-grid,
+  .audiomator-foundation-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 0.8fr);
+    gap: 2.75rem;
+    align-items: start;
+    margin-top: 2.75rem;
+  }
+
+  .audiomator-detail-copy {
+    margin: 0;
+  }
+
+  .audiomator-dropcap {
+    float: left;
+    width: 3.5rem;
+    height: 3.5rem;
+    margin: 0.2rem 0.85rem 0.15rem 0;
+    border: 2px solid var(--am-border);
+    font-family: var(--am-display);
+    font-size: 2.45rem;
+    font-weight: 600;
+    line-height: 3.15rem;
+    text-align: center;
+    color: var(--am-fg);
+  }
+
+  .audiomator-detail-note {
+    padding: 1.35rem 0 1rem;
+    border-top: 2px solid var(--am-border);
+  }
+
+  .audiomator-note-label {
+    margin: 0;
+    color: var(--am-muted);
+  }
+
+  .audiomator-detail-note p:last-child {
+    margin: 1rem 0 0;
+  }
+
+  .audiomator-workflow-list {
+    display: grid;
+    margin-top: 2.9rem;
+  }
+
+  .audiomator-workflow-step {
+    display: grid;
+    grid-template-columns: minmax(8rem, 12rem) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+    padding: 2rem 0;
+    border-top: 1px solid var(--am-border-light);
+  }
+
+  .audiomator-workflow-step:first-child {
+    border-top-width: 2px;
+    border-top-color: var(--am-border);
+    padding-top: 1.35rem;
+  }
+
+  .audiomator-workflow-rail {
+    display: grid;
+    gap: 0.7rem;
+    padding-right: 1.35rem;
+    border-right: 1px solid var(--am-border-light);
+  }
+
+  .audiomator-workflow-stepno {
+    margin: 0;
+    font-family: var(--am-display);
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 600;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    color: var(--am-fg);
+  }
+
+  .audiomator-workflow-pane {
+    margin: 0;
+    font-family: var(--am-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--am-muted);
+  }
+
+  .audiomator-workflow-text h3,
+  .audiomator-capability-head h3,
+  .audiomator-stack-row h3 {
+    margin: 0.8rem 0 0;
+    font-family: var(--am-display);
+    font-size: clamp(1.35rem, 2vw, 1.9rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  .audiomator-workflow-text p:last-child {
+    margin: 1rem 0 0;
+  }
+
+  .audiomator-workflow-points {
+    display: grid;
+    gap: 0.65rem;
+    margin: 1.25rem 0 0;
+    padding-left: 1.2rem;
+    color: var(--am-muted);
+  }
+
+  .audiomator-workflow-points li {
+    line-height: 1.58;
+  }
+
+  .audiomator-capability-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: 2.9rem;
+    background: var(--am-border);
+  }
+
+  .audiomator-capability {
+    padding: 1.7rem 1.55rem 1.8rem;
+    background: var(--am-bg);
+    transition:
+      background-color 100ms linear,
+      color 100ms linear;
+  }
+
+  .audiomator-capability:hover {
+    background: var(--am-fg);
+    color: var(--am-bg);
+  }
+
+  .audiomator-capability:hover .audiomator-capability-summary,
+  .audiomator-capability:hover .audiomator-capability-points,
+  .audiomator-capability:hover .audiomator-capability-index {
+    color: var(--am-hover-muted);
+  }
+
+  .audiomator-capability-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .audiomator-capability-index {
+    margin: 0;
+    color: var(--am-muted);
+  }
+
+  .audiomator-capability-summary {
+    margin: 1rem 0 0;
+  }
+
+  .audiomator-capability-points {
+    display: grid;
+    gap: 0.7rem;
+    margin: 1.25rem 0 0;
+    padding-left: 1.2rem;
+  }
+
+  .audiomator-capability-points li {
+    line-height: 1.6;
+  }
+
+  .audiomator-foundation-grid {
+    margin-top: 2.9rem;
+    gap: 0;
+    border-top: 2px solid var(--am-border);
+  }
+
+  .audiomator-foundation-column {
+    padding: 1.8rem 0 0;
+  }
+
+  .audiomator-format-column {
+    padding-left: 2.4rem;
+    border-left: 1px solid var(--am-border-light);
+  }
+
+  .audiomator-stack-list {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.15rem;
+  }
+
+  .audiomator-stack-row + .audiomator-stack-row {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--am-border-light);
+  }
+
+  .audiomator-stack-row p {
+    margin: 0.8rem 0 0;
+  }
+
+  .audiomator-format-value {
+    margin: 0.7rem 0 0;
+    font-family: var(--am-display);
+    font-size: clamp(2.5rem, 4vw, 3.4rem);
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+  }
+
+  .audiomator-format-copy {
+    margin: 1rem 0 0;
+  }
+
+  .audiomator-format-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 1.35rem;
+  }
+
+  .audiomator-format-list span {
+    padding: 0.5rem 0.7rem;
+    border: 1px solid var(--am-border);
+    font-family: var(--am-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .audiomator-cta {
+    position: relative;
+    margin-top: clamp(3.5rem, 7vw, 5rem);
+    padding: clamp(4rem, 8vw, 5.5rem) 0;
+    background: var(--am-fg);
+    color: var(--am-bg);
+    border-top: 4px solid var(--am-border);
+  }
+
+  .audiomator-cta::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at top center, var(--am-cta-glow), transparent 70%);
+    pointer-events: none;
+  }
+
+  .audiomator-cta-inner {
+    max-width: 46rem;
+  }
+
+  .audiomator-note-label-inverse {
+    color: var(--am-cta-muted);
+  }
+
+  .audiomator-cta-quote {
+    margin: 1.2rem 0 0;
+    font-family: var(--am-display);
+    font-size: clamp(2.6rem, 7vw, 5.4rem);
+    font-style: italic;
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+    white-space: nowrap;
+  }
+
+  .audiomator-cta-copy {
+    max-width: 38rem;
+    margin: 1.35rem 0 0;
+    color: var(--am-cta-copy-muted);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .audiomator-page {
+      --am-bg: #090909;
+      --am-fg: #f5f5f5;
+      --am-muted: #b3b3b3;
+      --am-muted-surface: #121212;
+      --am-border: #f5f5f5;
+      --am-border-light: rgba(255, 255, 255, 0.18);
+      --am-page-bg-start: #090909;
+      --am-page-bg-end: #101010;
+      --am-hero-bg-start: #090909;
+      --am-hero-bg-end: #111111;
+      --am-hero-line: rgba(255, 255, 255, 0.05);
+      --am-noise-opacity: 0.028;
+      --am-inverse-line: rgba(0, 0, 0, 0.06);
+      --am-inverse-grid: rgba(0, 0, 0, 0.16);
+      --am-inverse-copy: rgba(0, 0, 0, 0.72);
+      --am-diagonal-line: rgba(255, 255, 255, 0.04);
+      --am-grid-line: rgba(255, 255, 255, 0.05);
+      --am-hover-muted: rgba(0, 0, 0, 0.76);
+      --am-cta-glow: rgba(0, 0, 0, 0.08);
+      --am-cta-muted: rgba(0, 0, 0, 0.66);
+      --am-cta-copy-muted: rgba(0, 0, 0, 0.74);
+      color-scheme: dark;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .audiomator-stats-grid,
+    .audiomator-capability-list,
+    .audiomator-detail-grid,
+    .audiomator-foundation-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .audiomator-workflow-step {
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+    }
+
+    .audiomator-workflow-rail {
+      padding-right: 0;
+      padding-bottom: 0.9rem;
+      border-right: 0;
+      border-bottom: 1px solid var(--am-border-light);
+    }
+
+    .audiomator-format-column {
+      padding-left: 0;
+      border-left: 0;
+      border-top: 1px solid var(--am-border-light);
+      margin-top: 1.4rem;
+      padding-top: 1.4rem;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .audiomator-shell {
+      width: min(72rem, calc(100% - 1.4rem));
+    }
+
+    .audiomator-title {
+      font-size: clamp(3.4rem, 18vw, 5.6rem);
+    }
+
+    .audiomator-mark-rule {
+      width: 100%;
+    }
+
+    .audiomator-caption-row {
+      flex-direction: column;
+    }
+
+    .audiomator-button {
+      width: 100%;
+    }
+
+    .audiomator-cta-quote {
+      white-space: normal;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .audiomator-button,
+    .audiomator-capability {
+      transition: none;
+    }
+  }
+</style>

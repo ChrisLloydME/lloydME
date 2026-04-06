@@ -1,4 +1,5 @@
 ---
+import AudioMatorProjectPage from "../../components/projects/AudioMatorProjectPage.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { projects, type Project } from "../../data/projects";
 import { withBase } from "../../utils/paths";
@@ -12,71 +13,127 @@ export function getStaticPaths() {
 
 const { project } = Astro.props as { project: Project };
 const projectMeta = [project.category, ...project.tags].join(" · ");
+const isAudioMator = project.slug === "audiomator";
+const audioMatorLightThemeColor = "#ffffff";
+const audioMatorDarkThemeColor = "#090909";
 ---
 
-<BaseLayout title={project.name} description={project.summary}>
-  <article class="pb-10 sm:pb-16">
-    <section class="project-showcase-hero relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
-      <div class="mx-auto max-w-[1440px] px-4 py-16 sm:px-10 sm:py-24 lg:py-28">
-        <div class="mx-auto max-w-6xl text-center">
-          <img
-            src={withBase(project.icon)}
-            alt={`${project.name} app icon`}
-            class="app-icon-hero-shadow mx-auto h-28 w-28 rounded-[26px] sm:h-40 sm:w-40 sm:rounded-[36px] lg:h-44 lg:w-44 lg:rounded-[40px]"
-          />
+<BaseLayout
+  title={project.name}
+  description={project.summary}
+  fullBleed={isAudioMator}
+  mainClass={isAudioMator ? "pb-0 sm:pb-0" : undefined}
+  themeColor={isAudioMator ? audioMatorLightThemeColor : undefined}
+>
+  {
+    isAudioMator && (
+      <Fragment slot="head">
+        <meta name="color-scheme" content="light dark" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Playfair+Display:wght@500;600;700;800&family=Source+Serif+4:wght@400;500;600&display=swap"
+          rel="stylesheet"
+        />
+        <script
+          is:inline
+          define:vars={{
+            audioMatorDarkThemeColor,
+            audioMatorLightThemeColor,
+          }}
+        >
+          (() => {
+            const themeMeta = document.querySelector('meta[name="theme-color"]');
+            if (!themeMeta || typeof window.matchMedia !== "function") return;
 
-          <p class="mt-6 font-[family:var(--font-title)] text-[clamp(1.5rem,8vw,4.3rem)] font-semibold leading-none tracking-[-0.02em] text-white/90 sm:mt-8">
-            {project.name}
-          </p>
-          <h1 class="mx-auto mt-6 max-w-6xl font-[family:var(--font-title)] text-[clamp(2.8rem,15vw,8.5rem)] font-semibold leading-[0.92] tracking-[-0.025em] text-white sm:mt-8">
-            {project.heroHeadline}
-          </h1>
-          <p class="mx-auto mt-6 max-w-6xl font-[family:var(--font-title)] text-[clamp(1.05rem,5vw,2.35rem)] font-semibold leading-[1.35] tracking-[-0.01em] text-white/70 sm:mt-8 sm:leading-[1.28]">
-            {project.summary}
-          </p>
-          <p class="mt-8 text-sm font-medium tracking-[-0.01em] text-white/45 sm:mt-10 sm:text-base">
-            {projectMeta}
-          </p>
-        </div>
-      </div>
-    </section>
+            const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+            const applyThemeColor = () => {
+              themeMeta.setAttribute(
+                "content",
+                darkQuery.matches ? audioMatorDarkThemeColor : audioMatorLightThemeColor,
+              );
+            };
 
-    <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-10 sm:pt-24">
-      <div class="mx-auto max-w-5xl text-center">
-        <p class="section-kicker">Overview</p>
-        <h2 class="section-heading-sm mt-3">A cleaner way to fix metadata by hand</h2>
-        <p class="mt-6 text-[clamp(1.02rem,1.15vw+0.95rem,1.6rem)] leading-[1.75] tracking-[-0.02em] text-[var(--muted)] sm:leading-[1.8]">
-          {project.intro}
-        </p>
-      </div>
-    </section>
+            applyThemeColor();
 
-    <section class="mx-auto max-w-6xl px-4 py-16 sm:px-10 sm:py-24">
-      <div class="grid gap-5 md:grid-cols-3">
-        {project.capabilities.map((capability, index) => (
-          <section class="project-capability-card rounded-[2rem] border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[var(--card-shadow)] sm:p-8">
-            <p class="text-sm font-semibold tracking-[0.04em] text-[var(--accent)]">
-              0{index + 1}
+            if (typeof darkQuery.addEventListener === "function") {
+              darkQuery.addEventListener("change", applyThemeColor);
+            } else if (typeof darkQuery.addListener === "function") {
+              darkQuery.addListener(applyThemeColor);
+            }
+          })();
+        </script>
+      </Fragment>
+    )
+  }
+  {
+    isAudioMator ? (
+      <AudioMatorProjectPage project={project} />
+    ) : (
+      <article class="pb-10 sm:pb-16">
+        <section class="project-showcase-hero relative left-1/2 w-screen -translate-x-1/2 overflow-hidden">
+          <div class="mx-auto max-w-[1440px] px-4 py-16 sm:px-10 sm:py-24 lg:py-28">
+            <div class="mx-auto max-w-6xl text-center">
+              <img
+                src={withBase(project.icon)}
+                alt={`${project.name} app icon`}
+                class="app-icon-hero-shadow mx-auto h-28 w-28 rounded-[26px] sm:h-40 sm:w-40 sm:rounded-[36px] lg:h-44 lg:w-44 lg:rounded-[40px]"
+              />
+
+              <p class="mt-6 font-[family:var(--font-title)] text-[clamp(1.5rem,8vw,4.3rem)] font-semibold leading-none tracking-[-0.02em] text-white/90 sm:mt-8">
+                {project.name}
+              </p>
+              <h1 class="mx-auto mt-6 max-w-6xl font-[family:var(--font-title)] text-[clamp(2.8rem,15vw,8.5rem)] font-semibold leading-[0.92] tracking-[-0.025em] text-white sm:mt-8">
+                {project.heroHeadline}
+              </h1>
+              <p class="mx-auto mt-6 max-w-6xl font-[family:var(--font-title)] text-[clamp(1.05rem,5vw,2.35rem)] font-semibold leading-[1.35] tracking-[-0.01em] text-white/70 sm:mt-8 sm:leading-[1.28]">
+                {project.summary}
+              </p>
+              <p class="mt-8 text-sm font-medium tracking-[-0.01em] text-white/45 sm:mt-10 sm:text-base">
+                {projectMeta}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="mx-auto max-w-6xl px-4 pt-16 sm:px-10 sm:pt-24">
+          <div class="mx-auto max-w-5xl text-center">
+            <p class="section-kicker">Overview</p>
+            <h2 class="section-heading-sm mt-3">A cleaner way to fix metadata by hand</h2>
+            <p class="mt-6 text-[clamp(1.02rem,1.15vw+0.95rem,1.6rem)] leading-[1.75] tracking-[-0.02em] text-[var(--muted)] sm:leading-[1.8]">
+              {project.intro}
             </p>
-            <h3 class="mt-4 font-[family:var(--font-title)] text-[1.9rem] font-semibold leading-tight tracking-[-0.015em] text-[var(--ink)] sm:mt-5 sm:text-3xl">
-              {capability.title}
-            </h3>
-            <p class="mt-4 leading-7 text-[var(--muted)] sm:leading-8">{capability.summary}</p>
-          </section>
-        ))}
-      </div>
-    </section>
+          </div>
+        </section>
 
-    <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-10 sm:pb-28">
-      <div class="project-privacy-banner rounded-[2rem] bg-[var(--contrast-surface)] px-5 py-10 text-center text-white shadow-[var(--contrast-surface-shadow)] sm:rounded-[2.5rem] sm:px-12 sm:py-20">
-        <p class="text-sm font-semibold tracking-[0.04em] text-white/55">PRIVACY / VALUE</p>
-        <h2 class="mt-4 font-[family:var(--font-title)] text-[clamp(2.1rem,11vw,4.8rem)] font-semibold leading-[1.02] tracking-[-0.02em]">
-          Local by design.
-        </h2>
-        <p class="mx-auto mt-5 max-w-4xl text-[clamp(1rem,4.5vw,1.75rem)] leading-[1.65] tracking-[-0.025em] text-white/72 sm:mt-6 sm:leading-[1.6]">
-          {project.privacy}
-        </p>
-      </div>
-    </section>
-  </article>
+        <section class="mx-auto max-w-6xl px-4 py-16 sm:px-10 sm:py-24">
+          <div class="grid gap-5 md:grid-cols-3">
+            {project.capabilities.map((capability, index) => (
+              <section class="project-capability-card rounded-[2rem] border border-[var(--line)] bg-[var(--surface)] p-6 shadow-[var(--card-shadow)] sm:p-8">
+                <p class="text-sm font-semibold tracking-[0.04em] text-[var(--accent)]">
+                  0{index + 1}
+                </p>
+                <h3 class="mt-4 font-[family:var(--font-title)] text-[1.9rem] font-semibold leading-tight tracking-[-0.015em] text-[var(--ink)] sm:mt-5 sm:text-3xl">
+                  {capability.title}
+                </h3>
+                <p class="mt-4 leading-7 text-[var(--muted)] sm:leading-8">{capability.summary}</p>
+              </section>
+            ))}
+          </div>
+        </section>
+
+        <section class="mx-auto max-w-6xl px-4 pb-16 sm:px-10 sm:pb-28">
+          <div class="project-privacy-banner rounded-[2rem] bg-[var(--contrast-surface)] px-5 py-10 text-center text-white shadow-[var(--contrast-surface-shadow)] sm:rounded-[2.5rem] sm:px-12 sm:py-20">
+            <p class="text-sm font-semibold tracking-[0.04em] text-white/55">PRIVACY / VALUE</p>
+            <h2 class="mt-4 font-[family:var(--font-title)] text-[clamp(2.1rem,11vw,4.8rem)] font-semibold leading-[1.02] tracking-[-0.02em]">
+              Local by design.
+            </h2>
+            <p class="mx-auto mt-5 max-w-4xl text-[clamp(1rem,4.5vw,1.75rem)] leading-[1.65] tracking-[-0.025em] text-white/72 sm:mt-6 sm:leading-[1.6]">
+              {project.privacy}
+            </p>
+          </div>
+        </section>
+      </article>
+    )
+  }
 </BaseLayout>

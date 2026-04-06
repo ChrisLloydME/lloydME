@@ -17,7 +17,7 @@ const audioMator = projects.find((project) => project.slug === "audiomator");
 <BaseLayout fullBleed mainClass="pb-0">
   <section class="home-feature-stack">
     <div class="home-feature">
-      <a class="home-feature-card" href={featuredPostHref}>
+      <a class="home-feature-card" data-home-feature-primary href={featuredPostHref}>
         <div class="home-feature-image-wrap">
           <img
             src={frontPageFlyEmirates.src}
@@ -39,7 +39,11 @@ const audioMator = projects.find((project) => project.slug === "audiomator");
     {
       audioMator && (
         <div class="home-feature">
-          <a class="home-project-card" href={withBase(`/projects/${audioMator.slug}/`)}>
+          <a
+            class="home-project-card"
+            data-home-feature-secondary
+            href={withBase(`/projects/${audioMator.slug}/`)}
+          >
             <div class="home-project-visual">
               <div class="home-project-glow"></div>
               <img
@@ -59,4 +63,50 @@ const audioMator = projects.find((project) => project.slug === "audiomator");
       )
     }
   </section>
+
+  <script is:inline>
+    (() => {
+      const primaryCard = document.querySelector("[data-home-feature-primary]");
+      const secondaryCard = document.querySelector("[data-home-feature-secondary]");
+
+      if (!(primaryCard instanceof HTMLElement) || !(secondaryCard instanceof HTMLElement)) {
+        return;
+      }
+
+      const desktopQuery = window.matchMedia("(min-width: 901px)");
+      let frame = 0;
+
+      const syncProjectCardHeight = () => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(() => {
+          if (!desktopQuery.matches) {
+            secondaryCard.style.removeProperty("height");
+            secondaryCard.style.removeProperty("min-height");
+            return;
+          }
+
+          const primaryHeight = Math.ceil(primaryCard.getBoundingClientRect().height);
+          secondaryCard.style.height = `${primaryHeight}px`;
+          secondaryCard.style.minHeight = `${primaryHeight}px`;
+        });
+      };
+
+      syncProjectCardHeight();
+
+      if ("ResizeObserver" in window) {
+        const observer = new ResizeObserver(syncProjectCardHeight);
+        observer.observe(primaryCard);
+      } else {
+        window.addEventListener("resize", syncProjectCardHeight);
+      }
+
+      if (typeof desktopQuery.addEventListener === "function") {
+        desktopQuery.addEventListener("change", syncProjectCardHeight);
+      } else if (typeof desktopQuery.addListener === "function") {
+        desktopQuery.addListener(syncProjectCardHeight);
+      }
+
+      window.addEventListener("load", syncProjectCardHeight, { once: true });
+    })();
+  </script>
 </BaseLayout>
